@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.confood" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.phonegap.confood" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>ConFood</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        ConFood is an application that allows the user to display recipes for dishes made with his products.
+		User can rate, comment, add picture of prepared dish. He also has the ability to add his own recipe.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="jakub_krekora@wp.pl" href="https://github.com/jkrekora/ConFood">
+        Jakub Krekora - student's index number: 180733, type of studies: stationary, group number: KrDUIs1012
+		Serhiy Karaptan - student's index number: 182368, type of studies: stationary, group number: KrDUIs1012
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
