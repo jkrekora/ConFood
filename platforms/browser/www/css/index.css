@@ -1,1 +1,4 @@
-
+.main-page {
+    background:  transparent url(../img/main-wallpaper.png) no-repeat center center;
+    background-size: cover;
+}

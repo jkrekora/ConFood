@@ -1,11 +1,34 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <title>ConFood</title>
-    </head>
-    <body>
-        <script type="text/javascript" src="cordova.js"></script>
-    </body>
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    
+	<title>ConFood</title>
+
+    <link rel="stylesheet" href="css/index.css" />
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+    
+	<script src="cordova.js"></script>
+	<script src="js/index.js"></script>
+	<script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.js"></script>
+
+  </head>
+  <body onload="init()">
+	<div data-role="page" id="mainPage" class="main-page">
+		<div data-role="header">
+			<h1>ConFood</h1>
+		</div>
+		<div data-role="main" class="center">
+			<h2>Otwórz swoją lodówkę i kliknij przycisk u dołu :)</h2>
+			<center><a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></center>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
+		</div>
+	</div>
+	<div data-role="page" id="otherPage1" class="second-page">
+	</div>	
+  </body>
 </html>
