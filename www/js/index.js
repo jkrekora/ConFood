@@ -1,41 +1,54 @@
-$(document).ready(function () {
-    $(":checkbox").click(function () {
-        var thisVar = $(this);
-        var id = thisVar.attr('id');
-        var isChecked = thisVar.is(':checked');
-        alert("id" + id + "   " + "Checked " + isChecked);
-        //code to store it on local storage
-
-    });
-});
-
-function getImage() {
- navigator.camera.getPicture(uploadPhoto, function(message) {
- alert('get picture failed');
- }, {
- quality: 100,
- destinationType: navigator.camera.DestinationType.FILE_URI,
- sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
- });
-}
-
-function uploadPhoto(imageURI) {
- var options = new FileUploadOptions();
- options.fileKey = "file";
- options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
- options.mimeType = "image/jpeg";
- console.log(options.fileName);
- var params = new Object();
- params.value1 = "test";
- params.value2 = "param";
- options.params = params;
- options.chunkedMode = false;
-
-var ft = new FileTransfer();
- ft.upload(imageURI, "http://wizard.uek.krakow.pl/~s182368/images/upload/upload.php", function(result){
- console.log(JSON.stringify(result));
- }, function(error){
- console.log(JSON.stringify(error));
- }, options);
- }
+var pictureSource;   // picture source
+var destinationType; // sets the format of returned value
  
+document.addEventListener("deviceready", onDeviceReady, false);
+ 
+function onDeviceReady() {
+    pictureSource = navigator.camera.PictureSourceType;
+    destinationType = navigator.camera.DestinationType;
+}
+ 
+function clearCache() {
+    navigator.camera.cleanup();
+}
+ 
+var retries = 0;
+function onCapturePhoto(fileURI) {
+    var win = function (r) {
+        clearCache();
+        retries = 0;
+        alert('Done!');
+    }
+ 
+    var fail = function (error) {
+        if (retries == 0) {
+            retries ++
+            setTimeout(function() {
+                onCapturePhoto(fileURI)
+            }, 1000)
+        } else {
+            retries = 0;
+            clearCache();
+            alert('Ups. Something wrong happens!');
+        }
+    }
+ 
+    var options = new FileUploadOptions();
+    options.fileKey = "file";
+    options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
+    options.mimeType = "image/jpeg";
+    options.params = {}; // if we need to send parameters to the server request
+    var ft = new FileTransfer();
+    ft.upload(fileURI, encodeURI("http://wizard.uek.krakow.pl/~s182368/images/upload/upload.php"), win, fail, options);
+}
+ 
+function capturePhoto() {
+    navigator.camera.getPicture(onCapturePhoto, onFail, {
+        quality: 100,
+        destinationType: destinationType.FILE_URI
+    });
+}
+ 
+function onFail(message) {
+    alert('Failed because: ' + message);
+}
