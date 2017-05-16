@@ -32,7 +32,7 @@ function uploadPhoto(imageURI) {
  options.chunkedMode = false;
 
 var ft = new FileTransfer();
- ft.upload(imageURI, "http://wizard.uek.krakow.pl/~s182368/images/upload.php", function(result){
+ ft.upload(imageURI, "http://wizard.uek.krakow.pl/~s182368/images/upload/upload.php", function(result){
  console.log(JSON.stringify(result));
  }, function(error){
  console.log(JSON.stringify(error));
