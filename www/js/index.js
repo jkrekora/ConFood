@@ -51,11 +51,11 @@ function resolveOnSuccess(entry){
 
 function successMove(entry) {
    sessionStorage.setItem('imagepath', entry.fullPath);
-
 }
 
 function resOnError(error) {
    alert(error.code); 
+}
 
  function getImage() {
  navigator.camera.getPicture(uploadPhoto, function(message) {
