@@ -39,7 +39,7 @@ function onCapturePhoto(fileURI) {
     options.mimeType = "image/jpeg";
     options.params = {}; // if we need to send parameters to the server request
     var ft = new FileTransfer();
-    ft.upload(fileURI, encodeURI("http://wizard.uek.krakow.pl/~s182368/images/upload/upload.php"), win, fail, options);
+    ft.upload(fileURI, encodeURI("http://jkrekora.cba.pl/upload"), win, fail, options);
 }
  
 function capturePhoto() {
