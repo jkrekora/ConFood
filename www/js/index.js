@@ -3,7 +3,7 @@
 function capturePhoto() {
     sessionStorage.removeItem('imagepath');
     // Take picture using device camera and retrieve image as base64-encoded string
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI, saveToPhotoAlbum: true });
 }
 
 function onPhotoDataSuccess(imageURI) { 
@@ -40,7 +40,7 @@ function resolveOnSuccess(entry){
     var n = d.getTime();
     //new file name
     var newFileName = n + ".jpg";
-    var myFolderApp = "MyAppFolder";
+    var myFolderApp = "ConFoodPhotos";
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
     //The folder is created if doesn't exist
