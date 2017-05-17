@@ -1,33 +1,21 @@
-// A button will call this function
-//
 function capturePhoto() {
-    sessionStorage.removeItem('imagepath');
-    // Take picture using device camera and retrieve image as base64-encoded string
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI, saveToPhotoAlbum: true });
+// Take picture using device camera and retrieve image as base64-encoded string
+    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
 }
 
-function onPhotoDataSuccess(imageURI) { 
-        // Uncomment to view the base64 encoded image data
-        // console.log(imageData);
+//Callback function when the picture has been successfully taken
+function onPhotoDataSuccess(imageData) {                
+    // Get image handle
+    var smallImage = document.getElementById('smallImage');
 
-        // Get image handle
-        //
-        var imgProfile = document.getElementById('imgProfile');
-
-        // Show the captured photo
-        // The inline CSS rules are used to resize the image
-        //
-        imgProfile.src = imageURI;
-        if(sessionStorage.isprofileimage==1){
-            getLocation();
-        }
-        movePic(imageURI);
+    // Unhide image elements
+    smallImage.style.display = 'block';
+    smallImage.src = imageData;
 }
 
-// Called if something bad happens.
-// 
+//Callback function when the picture has not been successfully taken
 function onFail(message) {
-    alert('Failed because: ' + message);
+    alert('Failed to load picture because: ' + message);
 }
 
 function movePic(file){ 
@@ -40,7 +28,7 @@ function resolveOnSuccess(entry){
     var n = d.getTime();
     //new file name
     var newFileName = n + ".jpg";
-    var myFolderApp = "ConFoodPhotos";
+    var myFolderApp = "ConFood";
 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
     //The folder is created if doesn't exist
@@ -56,9 +44,7 @@ function resolveOnSuccess(entry){
 
 //Callback function when the file has been moved successfully - inserting the complete path
 function successMove(entry) {
-    //Store imagepath in session for future use
-    // like to store it in database
-    sessionStorage.setItem('imagepath', entry.fullPath);
+    //I do my insert with "entry.fullPath" as for the path
 }
 
 function resOnError(error) {
