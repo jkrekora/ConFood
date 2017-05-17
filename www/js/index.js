@@ -18,7 +18,7 @@ function onPhotoDataSuccess(imageURI) {
 function capturePhoto() {
    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
    destinationType: destinationType.FILE_URI,
-   saveToPhotoAlbum: false});
+   saveToPhotoAlbum: true});
 }
 
 function onFail(message) {
@@ -34,7 +34,7 @@ function resolveOnSuccess(entry){
    var n = d.getTime();
 
    var newFileName = n + ".jpg";
-   var myFolderApp = "Geofolder";
+   var myFolderApp = "ConFood";
 
    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys)  {  
         //The folder is created if doesn't exist
