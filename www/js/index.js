@@ -1,54 +1,48 @@
-var pictureSource;   // picture source
-var destinationType; // sets the format of returned value
- 
+// Wait for PhoneGap to load
 document.addEventListener("deviceready", onDeviceReady, false);
- 
+
+// PhoneGap is ready
 function onDeviceReady() {
-    pictureSource = navigator.camera.PictureSourceType;
-    destinationType = navigator.camera.DestinationType;
+// Do cool things here...
 }
- 
-function clearCache() {
-    navigator.camera.cleanup();
+
+function getImage() {
+	// Retrieve image file location from specified source
+	navigator.camera.getPicture(uploadPhoto, function(message) {
+	alert('get picture failed');
+},{
+	quality: 50, 
+	destinationType: navigator.camera.DestinationType.FILE_URI,
+	sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
 }
- 
-var retries = 0;
-function onCapturePhoto(fileURI) {
-    var win = function (r) {
-        clearCache();
-        retries = 0;
-        alert('Done!');
-    }
- 
-    var fail = function (error) {
-        if (retries == 0) {
-            retries ++
-            setTimeout(function() {
-                onCapturePhoto(fileURI)
-            }, 1000)
-        } else {
-            retries = 0;
-            clearCache();
-            alert('Ups. Something wrong happens!');
-        }
-    }
- 
-    var options = new FileUploadOptions();
-    options.fileKey = "file";
-    options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
-    options.mimeType = "image/jpeg";
-    options.params = {}; // if we need to send parameters to the server request
-    var ft = new FileTransfer();
-    ft.upload(fileURI, encodeURI("http://jkrekora.cba.pl/upload"), win, fail, options);
+	);
+
 }
- 
-function capturePhoto() {
-    navigator.camera.getPicture(onCapturePhoto, onFail, {
-        quality: 100,
-        destinationType: destinationType.FILE_URI
-    });
+
+function uploadPhoto(imageURI) {
+	var options = new FileUploadOptions();
+	options.fileKey="file";
+	options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+	options.mimeType="image/jpeg";
+
+	var params = new Object();
+	params.value1 = "test";
+	params.value2 = "param";
+
+	options.params = params;
+	options.chunkedMode = false;
+
+	var ft = new FileTransfer();
+	ft.upload(imageURI, "http://jkrekora.cba.pl/upload.php", win, fail, options);
 }
- 
-function onFail(message) {
-    alert('Failed because: ' + message);
+
+function win(r) {
+	console.log("Code = " + r.responseCode);
+	console.log("Response = " + r.response);
+	console.log("Sent = " + r.bytesSent);
+	alert(r.response);
+}
+
+function fail(error) {
+	alert("An error has occurred: Code = " = error.code);
 }
