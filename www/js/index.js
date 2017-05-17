@@ -27,4 +27,3 @@ var ft = new FileTransfer();
  console.log(JSON.stringify(error));
  }, options);
  }
- </script>
