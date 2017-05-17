@@ -1,54 +1,61 @@
+var pictureSource;   
+var destinationType;
+document.addEventListener("deviceready",onDeviceReady,false);
+
+function onDeviceReady() {
+   pictureSource=navigator.camera.PictureSourceType;
+   destinationType=navigator.camera.DestinationType;
+}
+
+function onPhotoDataSuccess(imageURI) {
+
+   var smallImage = document.getElementById('smallImage');
+   smallImage.style.display = 'block';
+   smallImage.src = imageURI;
+   movePic(imageURI);
+}
+
 function capturePhoto() {
-// Take picture using device camera and retrieve image as base64-encoded string
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+   navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+   destinationType: destinationType.FILE_URI,
+   saveToPhotoAlbum: false});
 }
 
-//Callback function when the picture has been successfully taken
-function onPhotoDataSuccess(imageData) {                
-    // Get image handle
-    var smallImage = document.getElementById('smallImage');
-
-    // Unhide image elements
-    smallImage.style.display = 'block';
-    smallImage.src = imageData;
-}
-
-//Callback function when the picture has not been successfully taken
 function onFail(message) {
-    alert('Failed to load picture because: ' + message);
+   alert('Failed because: ' + message);
 }
 
-function movePic(file){ 
-    window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError); 
-} 
+function movePic(file){
+   window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError);
+}
 
-//Callback function when the file system uri has been resolved
-function resolveOnSuccess(entry){ 
-    var d = new Date();
-    var n = d.getTime();
-    //new file name
-    var newFileName = n + ".jpg";
-    var myFolderApp = "ConFood";
+function resolveOnSuccess(entry){
+   var d = new Date();
+   var n = d.getTime();
 
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
-    //The folder is created if doesn't exist
-    fileSys.root.getDirectory( myFolderApp,
-                    {create:true, exclusive: false},
-                    function(directory) {
-                        entry.moveTo(directory, newFileName,  successMove, resOnError);
-                    },
-                    resOnError);
-                    },
+   var newFileName = n + ".jpg";
+   var myFolderApp = "Geofolder";
+
+   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys)  {  
+        //The folder is created if doesn't exist
+    var direct = fileSys.root;
+          direct.getDirectory( myFolderApp,
+            {create:true, exclusive: false},
+            function(myFolderApp) {
+                entry.moveTo(myFolderApp, newFileName,  successMove,  resOnError);
+            },
+            resOnError);
+    },
     resOnError);
 }
 
-//Callback function when the file has been moved successfully - inserting the complete path
 function successMove(entry) {
-    //I do my insert with "entry.fullPath" as for the path
+   sessionStorage.setItem('imagepath', entry.fullPath);
+
 }
 
 function resOnError(error) {
-    alert(error.code);
+   alert(error.code);
 }
 
  function getImage() {
