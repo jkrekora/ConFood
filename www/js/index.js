@@ -6,7 +6,25 @@ function onDeviceReady() {
    pictureSource=navigator.camera.PictureSourceType;
    destinationType=navigator.camera.DestinationType;
 }
-
+function showMeal(str) {
+    if (str == "") {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else { 
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q="+str,true);
+        xmlhttp.send();
+    }
+}
 function onPhotoDataSuccess(imageURI) {
 
    var smallImage = document.getElementById('smallImage');
@@ -48,7 +66,6 @@ function resolveOnSuccess(entry){
     },
     resOnError);
 }
-
 function successMove(entry) {
    sessionStorage.setItem('imagepath', entry.fullPath);
 

@@ -143,6 +143,7 @@
 			<label for="chk54">
 				<input type="checkbox" name="product" id="chk54" value="Product54">ziemniaki</label>
 			<a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Gotowe</a>
+			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Pokaż wszystkie przepisy</a>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
@@ -154,6 +155,18 @@
 		</div>
 		<div data-role="main" class="ui-content">
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getImage()">Dodaj zdjęcie</button>
+		</div>
+	</div>
+		<div data-role="page" id="otherPage3" class="fourth-page">
+		<div data-role="main" class="ui-content">
+			<form>
+			<select name="meal" onchange="showMeal(this.value)">
+				<option value="">Select a person:</option>
+				<option value="1">Fried chicken</option>
+			</select>
+			</form>
+			<br>
+			<div id="txtHint"><b>Person info will be listed here...</b></div>
 		</div>
 	</div>
   </body>

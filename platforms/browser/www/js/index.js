@@ -1,54 +1,106 @@
-var pictureSource;   // picture source
-var destinationType; // sets the format of returned value
- 
-document.addEventListener("deviceready", onDeviceReady, false);
- 
+var pictureSource;   
+var destinationType;
+document.addEventListener("deviceready",onDeviceReady,false);
+
 function onDeviceReady() {
-    pictureSource = navigator.camera.PictureSourceType;
-    destinationType = navigator.camera.DestinationType;
+   pictureSource=navigator.camera.PictureSourceType;
+   destinationType=navigator.camera.DestinationType;
 }
- 
-function clearCache() {
-    navigator.camera.cleanup();
-}
- 
-var retries = 0;
-function onCapturePhoto(fileURI) {
-    var win = function (r) {
-        clearCache();
-        retries = 0;
-        alert('Done!');
-    }
- 
-    var fail = function (error) {
-        if (retries == 0) {
-            retries ++
-            setTimeout(function() {
-                onCapturePhoto(fileURI)
-            }, 1000)
+function showMeal(str) {
+    if (str == "") {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else { 
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
         } else {
-            retries = 0;
-            clearCache();
-            alert('Ups. Something wrong happens!');
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q="+str,true);
+        xmlhttp.send();
     }
- 
-    var options = new FileUploadOptions();
-    options.fileKey = "file";
-    options.fileName = fileURI.substr(fileURI.lastIndexOf('/') + 1);
-    options.mimeType = "image/jpeg";
-    options.params = {}; // if we need to send parameters to the server request
-    var ft = new FileTransfer();
-    ft.upload(fileURI, encodeURI("http://wizard.uek.krakow.pl/~s182368/images/upload/upload.php"), win, fail, options);
 }
- 
+function onPhotoDataSuccess(imageURI) {
+
+   var smallImage = document.getElementById('smallImage');
+   smallImage.style.display = 'block';
+   smallImage.src = imageURI;
+   movePic(imageURI);
+}
+
 function capturePhoto() {
-    navigator.camera.getPicture(onCapturePhoto, onFail, {
-        quality: 100,
-        destinationType: destinationType.FILE_URI
-    });
+   navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+   destinationType: destinationType.FILE_URI,
+   saveToPhotoAlbum: true});
 }
- 
+
 function onFail(message) {
-    alert('Failed because: ' + message);
+   alert('Failed because: ' + message);
 }
+
+function movePic(file){
+   window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError);
+}
+
+function resolveOnSuccess(entry){
+   var d = new Date();
+   var n = d.getTime();
+
+   var newFileName = n + ".jpg";
+   var myFolderApp = "ConFood";
+
+   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys)  {  
+        //The folder is created if doesn't exist
+    var direct = fileSys.root;
+          direct.getDirectory( myFolderApp,
+            {create:true, exclusive: false},
+            function(myFolderApp) {
+                entry.moveTo(myFolderApp, newFileName,  successMove,  resOnError);
+            },
+            resOnError);
+    },
+    resOnError);
+}
+function successMove(entry) {
+   sessionStorage.setItem('imagepath', entry.fullPath);
+
+}
+
+function resOnError(error) {
+   alert(error.code);
+}
+
+ function getImage() {
+ navigator.camera.getPicture(uploadPhoto, function(message) {
+ alert('get picture failed');
+ }, {
+ quality: 100,
+ destinationType: navigator.camera.DestinationType.FILE_URI,
+ sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+ });
+}
+
+function uploadPhoto(imageURI) {
+ var options = new FileUploadOptions();
+ options.fileKey = "file";
+ options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+ options.mimeType = "image/jpeg";
+ console.log(options.fileName);
+ var params = new Object();
+ params.value1 = "test";
+ params.value2 = "param";
+ options.params = params;
+ options.chunkedMode = false;
+
+var ft = new FileTransfer();
+ ft.upload(imageURI, "http://jkrekora.cba.pl/upload.php", function(result){
+ console.log(JSON.stringify(result));
+ }, function(error){
+ console.log(JSON.stringify(error));
+ }, options);
+ }
