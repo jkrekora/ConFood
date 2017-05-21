@@ -1,5 +1,6 @@
 var pictureSource;   
 var destinationType;
+var selectedProducts=null;
 document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady() {
@@ -8,16 +9,17 @@ function onDeviceReady() {
 }
 function showProducts(){
 	var productList = document.getElementById("product-list");
-	var selectedProducts = productList.getElementsByTagName("input");
+	selectedProducts = productList.getElementsByTagName("input");
 	for(i = 0; i < selectedProducts.length; i++){
 		if(selectedProducts[i].checked){
 			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + selectedProducts[i].getAttribute("value") + "</b>";
 		}
 	}
 }
-function showMeal(str) {
-    if (str == "") {
-        document.getElementById("txtHint").innerHTML = "";
+function getSelectedRecipes(){
+	    if (selectedProducts==null) {
+        document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz producty które masz"; 
+		document.getElementById("optional-image").innerHTML = "<img src='img/talerz_pusty.jpg'/>";
         return;
     } else { 
         if (window.XMLHttpRequest) {
@@ -30,7 +32,21 @@ function showMeal(str) {
                 document.getElementById("txtHint").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q="+str,true);
+        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q=",true);
+        xmlhttp.send();
+    }
+}
+function showMeal() {
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q=str"true);
         xmlhttp.send();
     }
 }

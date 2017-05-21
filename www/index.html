@@ -153,8 +153,8 @@
 		<div data-role="main" class="ui-content">
 			<div id="selected-products"><b>Wybrane produkty</b></div>
 		</div>
-				<div data-role="main" class="ui-content">
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes">Pokaż przepisy</button>
+		<div data-role="main" class="ui-content">
+			<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes()">Pokaż przepisy</a>
 		</div>
 		<div data-role="main" class="ui-content">
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button>
@@ -163,11 +163,17 @@
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getImage()">Dodaj zdjęcie</button>
 		</div>
 	</div>
+	<div data-role="page" id="recipes-page" class="recipes-page">
+		<div data-role="main" class="ui-content">
+			<div id="recipe-list"><b>Możesz przygotować poniższe dania: </br></b></div>
+			<div id="optional-image"></div>
+		</div>
+	</div>
 		<div data-role="page" id="otherPage3" class="fourth-page">
 		<div data-role="main" class="ui-content">
 			<form>
-			<select name="meal" onclick="showMeal(this.value)">
-				<option value="1">Fried chicken</option>
+			<select name="meal" onclick="showMeal()">
+				<option>Fried chicken</option>
 			</select>
 			</form>
 			<br>
