@@ -6,6 +6,15 @@ function onDeviceReady() {
    pictureSource=navigator.camera.PictureSourceType;
    destinationType=navigator.camera.DestinationType;
 }
+function showProducts(){
+	var productList = document.getElementById("product-list");
+	var selectedProducts = productList.getElementsByTagName("input");
+	for(i = 0; i < selectedProducts.length; i++){
+		if(selectedProducts[i].checked){
+			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + selectedProducts[i].getAttribute("value") + "</b>";
+		}
+	}
+}
 function showMeal(str) {
     if (str == "") {
         document.getElementById("txtHint").innerHTML = "";
