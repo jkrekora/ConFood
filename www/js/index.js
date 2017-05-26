@@ -1,12 +1,3 @@
-var pictureSource;   
-var destinationType;
-var selectedProducts=null;
-document.addEventListener("deviceready",onDeviceReady,false);
-
-function onDeviceReady() {
-   pictureSource=navigator.camera.PictureSourceType;
-   destinationType=navigator.camera.DestinationType;
-}
 function showProducts(){
 	var productList = document.getElementById("product-list");
 	selectedProducts = productList.getElementsByTagName("input");
@@ -18,7 +9,7 @@ function showProducts(){
 }
 function getSelectedRecipes(){
 	    if (selectedProducts==null) {
-        document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz producty które masz"; 
+        document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz"; 
 		document.getElementById("optional-image").innerHTML = "<img src='img/talerz_pusty.jpg'/>";
         return;
     } else { 
@@ -50,6 +41,16 @@ function showMeal() {
         xmlhttp.send();
     }
 }
+
+var pictureSource;   
+var destinationType;
+var selectedProducts=null;
+document.addEventListener("deviceready",onDeviceReady,false);
+
+function onDeviceReady() {
+   pictureSource=navigator.camera.PictureSourceType;
+   destinationType=navigator.camera.DestinationType;
+}
 function onPhotoDataSuccess(imageURI) {
 
    var smallImage = document.getElementById('smallImage');
@@ -57,21 +58,17 @@ function onPhotoDataSuccess(imageURI) {
    smallImage.src = imageURI;
    movePic(imageURI);
 }
-
 function capturePhoto() {
    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
    destinationType: destinationType.FILE_URI,
    saveToPhotoAlbum: true});
 }
-
 function onFail(message) {
    alert('Failed because: ' + message);
 }
-
 function movePic(file){
    window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError);
 }
-
 function resolveOnSuccess(entry){
    var d = new Date();
    var n = d.getTime();
@@ -93,13 +90,10 @@ function resolveOnSuccess(entry){
 }
 function successMove(entry) {
    sessionStorage.setItem('imagepath', entry.fullPath);
-
 }
-
 function resOnError(error) {
    alert(error.code);
 }
-
  function getImage() {
  navigator.camera.getPicture(uploadPhoto, function(message) {
  alert('get picture failed');
@@ -109,7 +103,6 @@ function resOnError(error) {
  sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
  });
 }
-
 function uploadPhoto(imageURI) {
  var options = new FileUploadOptions();
  options.fileKey = "file";
