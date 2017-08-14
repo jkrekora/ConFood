@@ -1,12 +1,3 @@
-var pictureSource;   
-var destinationType;
-var selectedProducts=null;
-document.addEventListener("deviceready",onDeviceReady,false);
-
-function onDeviceReady() {
-   pictureSource=navigator.camera.PictureSourceType;
-   destinationType=navigator.camera.DestinationType;
-}
 function showProducts(){
 	var productList = document.getElementById("product-list");
 	selectedProducts = productList.getElementsByTagName("input");
@@ -18,10 +9,10 @@ function showProducts(){
 }
 function getSelectedRecipes(){
 	    if (selectedProducts==null) {
-        document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz producty które masz"; 
+        document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
 		document.getElementById("optional-image").innerHTML = "<img src='img/talerz_pusty.jpg'/>";
         return;
-    } else { 
+    } else {
         if (window.XMLHttpRequest) {
             xmlhttp = new XMLHttpRequest();
         } else {
@@ -32,7 +23,7 @@ function getSelectedRecipes(){
                 document.getElementById("txtHint").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q=",true);
+        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php",true);
         xmlhttp.send();
     }
 }
@@ -46,9 +37,19 @@ function showMeal() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("txtHint").innerHTML = this.responseText;
             }
-        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q=str"true);
+        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php",true);
         xmlhttp.send();
     }
+}
+
+var pictureSource;
+var destinationType;
+var selectedProducts=null;
+document.addEventListener("deviceready",onDeviceReady,false);
+
+function onDeviceReady() {
+   pictureSource=navigator.camera.PictureSourceType;
+   destinationType=navigator.camera.DestinationType;
 }
 function onPhotoDataSuccess(imageURI) {
 
@@ -57,21 +58,17 @@ function onPhotoDataSuccess(imageURI) {
    smallImage.src = imageURI;
    movePic(imageURI);
 }
-
 function capturePhoto() {
    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
    destinationType: destinationType.FILE_URI,
    saveToPhotoAlbum: true});
 }
-
 function onFail(message) {
    alert('Failed because: ' + message);
 }
-
 function movePic(file){
    window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError);
 }
-
 function resolveOnSuccess(entry){
    var d = new Date();
    var n = d.getTime();
@@ -79,7 +76,7 @@ function resolveOnSuccess(entry){
    var newFileName = n + ".jpg";
    var myFolderApp = "ConFood";
 
-   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys)  {  
+   window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys)  {
         //The folder is created if doesn't exist
     var direct = fileSys.root;
           direct.getDirectory( myFolderApp,
@@ -93,13 +90,10 @@ function resolveOnSuccess(entry){
 }
 function successMove(entry) {
    sessionStorage.setItem('imagepath', entry.fullPath);
-
 }
-
 function resOnError(error) {
    alert(error.code);
 }
-
  function getImage() {
  navigator.camera.getPicture(uploadPhoto, function(message) {
  alert('get picture failed');
@@ -109,7 +103,6 @@ function resOnError(error) {
  sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
  });
 }
-
 function uploadPhoto(imageURI) {
  var options = new FileUploadOptions();
  options.fileKey = "file";

@@ -3,16 +3,46 @@
   <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    
+
 	<title>ConFood</title>
 
-    <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="css/index.css" />
 	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
-    
-	<script src="cordova.js"></script>
-	<script src="js/index.js"></script>
 	<script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/jquery.mobile-1.4.5.js"></script>
+  <script src="js/jquery.mobile-1.4.5.js"></script>
+  <script>
+  var selectedProducts=[];
+  function showProducts(){
+  	var productList = document.getElementById("product-list").getElementsByTagName("input");
+    document.getElementById("productCount").innerHTML = "Hello";
+  	for(i = 0; i < productList.length; i++){
+      if(productList[i].checked){
+        selectedProducts.push(productList);
+        document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + productList[i].getAttribute("value") + "</b>";
+      }
+  	}
+  }
+  function getSelectedRecipes(){
+  	    if (selectedProducts==null) {
+          document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
+  		    document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;''><img align='middle' src='img/talerz_pusty.jpg'/></div>";
+          return;
+      }else {
+          if (window.XMLHttpRequest) {
+              xmlhttp = new XMLHttpRequest();
+          } else {
+              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+          }
+          xmlhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("txtHint").innerHTML = this.responseText;
+              }
+          };
+          xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q=",true);
+          xmlhttp.send();
+      }
+  }
+  </script>
 
   </head>
   <body onload="init()">
@@ -142,7 +172,9 @@
 				<input type="checkbox" name="product" id="chk53" value="Product53">wołowina</label>
 			<label for="chk54">
 				<input type="checkbox" name="product" id="chk54" value="Product54">ziemniaki</label>
-			<a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
+      <button type="button" onclick="showProducts();">Click Me!</button>
+      <label id="productCount">Elo</label>
+      <a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts();">Gotowe</a>
 			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Pokaż wszystkie przepisy</a>
 		</div>
 		<div data-role="footer" data-position="fixed">
@@ -154,7 +186,7 @@
 			<div id="selected-products"><b>Wybrane produkty</b></div>
 		</div>
 		<div data-role="main" class="ui-content">
-			<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes()">Pokaż przepisy</a>
+			<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes();">Pokaż przepisy</a>
 		</div>
 		<div data-role="main" class="ui-content">
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button>
@@ -165,7 +197,7 @@
 	</div>
 	<div data-role="page" id="recipes-page" class="recipes-page">
 		<div data-role="main" class="ui-content">
-			<div id="recipe-list"><b>Możesz przygotować poniższe dania: </br></b></div>
+			<div id="recipe-list" class="recipe-list"><b>Możesz przygotować poniższe dania: </br></b></div>
 			<div id="optional-image"></div>
 		</div>
 	</div>
