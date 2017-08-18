@@ -3,7 +3,7 @@ function showProducts(){
 	selectedProducts = productList.getElementsByTagName("input");
 	for(i = 0; i < selectedProducts.length; i++){
 		if(selectedProducts[i].checked){
-			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + selectedProducts[i].getAttribute("value") + "</b>";
+			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp- " + selectedProducts[i].getAttribute("value") + "</b>";
 		}
 	}
 }
@@ -46,6 +46,7 @@ var destinationType;
 var selectedProducts=null;
 document.addEventListener("deviceready",onDeviceReady,false);
 function onDeviceReady(){
+    navigator.splashscreen.show();
     pictureSource=navigator.camera.PictureSourceType;
     destinationType=navigator.camera.DestinationType;
 }
@@ -70,7 +71,7 @@ function resolveOnSuccess(entry){
     var d = new Date();
     var n = d.getTime();var newFileName = n + ".jpg";
     var myFolderApp = "ConFood";
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys){
             var direct = fileSys.root;
             direct.getDirectory( myFolderApp,{
                     create:true, exclusive: false},

@@ -6,7 +6,6 @@
 	<title>ConFood</title>
     <link rel="stylesheet" href="css/index.css" />
 	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
-	<script src="cordova.js"></script>
 	<script src="js/index.js"></script>
 	<script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.js"></script>
@@ -18,7 +17,7 @@
 		</div>
 		<div data-role="main" class="center">
 			<h2>Otwórz swoją lodówkę i kliknij przycisk u dołu :)</h2>
-			<center><a href="#secondPage" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></center>
+			<div style="text-align: center;"><a href="#secondPage" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></div>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
@@ -41,7 +40,7 @@
 	</div>
 	<div data-role="page" id="thirdPage" class="third-page">
 		<div data-role="main" class="ui-content">
-			<div id="selected-products"><b>Wybrane produkty</b></div><br>
+			<div id="selected-products"><b>Wybrane produkty:</b></div><br>
 			<a href="#fourthPage" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes()">Pokaż przepisy</a><br>
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button><br>
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getImage()">Dodaj zdjęcie</button>
@@ -49,7 +48,7 @@
 	</div>
 	<div data-role="page" id="fourthPage" class="fourth-page">
 		<div data-role="main" class="ui-content">
-			<div id="recipe-list"><b>Możesz przygotować poniższe dania:</br></b></div>
+			<div id="recipe-list"><b>Możesz przygotować poniższe dania:<br></b></div>
 			<div id="optional-image"></div>
 		</div>
 	</div>
