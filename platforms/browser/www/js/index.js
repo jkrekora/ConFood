@@ -1,31 +1,34 @@
+var selectedProducts = new Array();
 function showProducts(){
-	var productList = document.getElementById("product-list");
-	selectedProducts = productList.getElementsByTagName("input");
-	for(i = 0; i < selectedProducts.length; i++){
-		if(selectedProducts[i].checked){
-			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + selectedProducts[i].getAttribute("value") + "</b>";
-		}
+	var productList = document.getElementById("product-list").getElementsByTagName("input");
+	for(i = 0; i < productList.length; i++){
+		if(productList[i].checked){
+			selectedProducts.push(productList[i].getAttribute("value"));
+			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + productList[i].getAttribute("value") + "</b>";
+			}
 	}
 }
 function getSelectedRecipes(){
-	    if (selectedProducts==null) {
-        document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
-		document.getElementById("optional-image").innerHTML = "<img src='img/talerz_pusty.jpg'/>";
-        return;
-    } else {
-        if (window.XMLHttpRequest) {
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHint").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php",true);
-        xmlhttp.send();
-    }
+		if (selectedProducts.length==0) {
+				document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
+				document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;'><img align='middle' style='max-width: 50%; height: auto; width: auto;' src='img/talerz_pusty.jpg'/></div>";
+				return;
+		}
+		else {
+				var allRecipes =  document.getElementsByClassName("recipe");
+				var recipesToShow = [];
+				for(i=0; i < allRecipes.length; i++){
+					for(j=0; j < selectedProducts.length; j++){
+						if(allRecipes[i].getAttribute("ingredients").includes(selectedProducts[j])){
+								recipesToShow.push(allRecipes[i]);
+						}
+					}
+				}
+			for(k = 0; k < recipesToShow.length; k++){
+			if(!document.getElementById("recipe-list").innerHTML.includes(recipesToShow[k].innerHTML)){
+				document.getElementById("recipe-list").innerHTML += recipesToShow[k].innerHTML;
+			}
+}
 }
 function showMeal() {
         if (window.XMLHttpRequest) {

@@ -10,27 +10,138 @@
 	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 	<script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/jquery.mobile-1.4.5.js"></script>
+  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+  <script type="text/javascript" >
+  var pictureSource;
+  var destinationType;
+  var selectedProducts = new Array();
 
-  <script>
-  var selectedProducts=[];
+  function showMeal() {
+          if (window.XMLHttpRequest) {
+              xmlhttp = new XMLHttpRequest();
+          } else {
+              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+          }
+          xmlhttp.open("GET","http://jkrekora.cba.pl/recipes.html",true);
+          xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+              document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+            }
+          }
+          xmlhttp.send();
+  }
   function showProducts(){
   	var productList = document.getElementById("product-list").getElementsByTagName("input");
   	for(i = 0; i < productList.length; i++){
-      if(productList[i].checked){
-        selectedProducts.push(productList);
-        document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + productList[i].getAttribute("value") + "</b>";
-        }
+  		if(productList[i].checked){
+  			selectedProducts.push(productList[i].getAttribute("value"));
+  			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + productList[i].getAttribute("value") + "</b>";
+  			}
   	}
   }
-
   function getSelectedRecipes(){
-  	  if (selectedProducts.length==0) {
-          document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
-  		    document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;'><img align='middle' style='max-width: 50%; height: auto; width: auto;' src='img/talerz_pusty.jpg'/></div>";
-          return;
+  		if (selectedProducts.length==0) {
+  				document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
+  				document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;'><img align='middle' style='max-width: 50%; height: auto; width: auto;' src='img/talerz_pusty.jpg'/></div>";
+  				return;
+  		}
+  		else {
+  				var allRecipes =  document.getElementsByClassName("recipe");
+  				var recipesToShow = [];
+  				for(i=0; i < allRecipes.length; i++){
+  					for(j=0; j < selectedProducts.length; j++){
+  						if(allRecipes[i].getAttribute("ingredients").includes(selectedProducts[j])){
+  								recipesToShow.push(allRecipes[i]);
+  						}
+  					}
+  				}
+  			for(k = 0; k < recipesToShow.length; k++){
+  			if(!document.getElementById("recipe-list").innerHTML.includes(recipesToShow[k].innerHTML)){
+  				document.getElementById("recipe-list").innerHTML += recipesToShow[k].innerHTML;
+  			}
       }
+  }
 }
-  </script>
+          var pictureSource;   // picture source
+          var destinationType; // sets the format of returned value
+
+          // Wait for device API libraries to load
+          //
+          document.addEventListener("deviceready",onDeviceReady,false);
+
+          // device APIs are available
+          //
+          function onDeviceReady() {
+              pictureSource = navigator.camera.PictureSourceType;
+              destinationType = navigator.camera.DestinationType;
+          }
+
+
+          // Called when a photo is successfully retrieved
+          //
+          function onPhotoURISuccess(imageURI) {
+
+              // Show the selected image
+              var smallImage = document.getElementById('smallImage');
+              smallImage.style.display = 'block';
+              smallImage.src = imageURI;
+          }
+
+
+          // A button will call this function
+          //
+          function getPhoto(source) {
+            // Retrieve image file location from specified source
+            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+              destinationType: destinationType.FILE_URI,
+              sourceType: source });
+          }
+
+          function uploadPhoto() {
+
+              //selected photo URI is in the src attribute (we set this on getPhoto)
+              var imageURI = document.getElementById('smallImage').getAttribute("src");
+              if (!imageURI) {
+                  alert('Please select an image first.');
+                  return;
+              }
+
+              //set upload options
+              var options = new FileUploadOptions();
+              options.fileKey = "file";
+              options.fileName = imageURI.substr(imageURI.lastIndexOf('/')+1);
+              options.mimeType = "image/jpeg";
+
+/*              options.params = {
+                  firstname: document.getElementById("firstname").value,
+                  lastname: document.getElementById("lastname").value,
+                  workplace: document.getElementById("workplace").value
+              }*/
+
+              var ft = new FileTransfer();
+              ft.upload(imageURI, encodeURI("http://jkrekora.cba.pl/upload.php"), win, fail, options);
+          }
+
+          // Called if something bad happens.
+          //
+          function onFail(message) {
+            console.log('Failed because: ' + message);
+          }
+
+          function win(r) {
+              console.log("Code = " + r.responseCode);
+              console.log("Response = " + r.response);
+              //alert("Response =" + r.response);
+              console.log("Sent = " + r.bytesSent);
+          }
+
+          function fail(error) {
+              alert("An error has occurred: Code = " + error.code);
+              console.log("upload error source " + error.source);
+              console.log("upload error target " + error.target);
+          }
+
+</script>
 
   </head>
   <body onload="init()">
@@ -55,11 +166,11 @@
 			<label for="chk1">
 				<input type="checkbox" name="product" id="chk1" value="awokado">awokado</label>
 			<label for="chk2">
-				<input type="checkbox" name="product" id="chk2" value="boczek wędzony" primary="true">boczek wędzony</label>
+				<input type="checkbox" name="product" id="chk2" value="boczek wedzony" primary="true">boczek wędzony</label>
 			<label for="chk3">
-				<input type="checkbox" name="product" id="chk3" value="bułka tarta">bułka tarta</label>
+				<input type="checkbox" name="product" id="chk3" value="bulka tarta">bułka tarta</label>
 			<label for="chk4">
-				<input type="checkbox" name="product" id="chk4" value="cebula biała">cebula biała</label>
+				<input type="checkbox" name="product" id="chk4" value="cebula biala">cebula biała</label>
 			<label for="chk5">
 				<input type="checkbox" name="product" id="chk5" value="cebula czerwona">cebula czerwona</label>
 			<label for="chk6">
@@ -73,9 +184,9 @@
 			<label for="chk10">
 				<input type="checkbox" name="product" id="chk10" value="czosnek">czosnek</label>
 			<label for="chk11">
-				<input type="checkbox" name="product" id="chk11" value="drożdże">drożdże</label>
+				<input type="checkbox" name="product" id="chk11" value="drozdze">drożdże</label>
 			<label for="chk12">
-				<input type="checkbox" name="product" id="chk12" value="jabłka">jabłka</label>
+				<input type="checkbox" name="product" id="chk12" value="jablka">jabłka</label>
 			<label for="chk13">
 				<input type="checkbox" name="product" id="chk13" value="jajka" primary="true" >jajka</label>
 			<label for="chk14">
@@ -83,7 +194,7 @@
 			<label for="chk15">
 				<input type="checkbox" name="product" id="chk15" value="jogurt naturalny">jogurt naturalny</label>
 			<label for="chk16">
-				<input type="checkbox" name="product" id="chk16" value="kiełbasa" primary="true">kiełbasa</label>
+				<input type="checkbox" name="product" id="chk16" value="kielbasa" primary="true">kiełbasa</label>
 			<label for="chk17">
 				<input type="checkbox" name="product" id="chk17" value="kokos">kokos</label>
 			<label for="chk18">
@@ -97,13 +208,13 @@
 			<label for="chk22">
 				<input type="checkbox" name="product" id="chk22" value="margaryna">margaryna</label>
 			<label for="chk23">
-				<input type="checkbox" name="product" id="chk23" value="masło">masło</label>
+				<input type="checkbox" name="product" id="chk23" value="maslo">masło</label>
 			<label for="chk24">
-				<input type="checkbox" name="product" id="chk24" value="mąka">mąka</label>
+				<input type="checkbox" name="product" id="chk24" value="maka">mąka</label>
 			<label for="chk25">
-				<input type="checkbox" name="product" id="chk25" value="mięso mielone" primary="true">mięso mielone</label>
+				<input type="checkbox" name="product" id="chk25" value="mieso mielone" primary="true">mięso mielone</label>
 			<label for="chk26">
-				<input type="checkbox" name="product" id="chk26" value="miód">miód</label>
+				<input type="checkbox" name="product" id="chk26" value="miod">miód</label>
 			<label for="chk27">
 				<input type="checkbox" name="product" id="chk27" value="mleko">mleko</label>
 			<label for="chk28">
@@ -113,7 +224,7 @@
 			<label for="chk30">
 				<input type="checkbox" name="product" id="chk30" value="ocet winny">ocet winny</label>
 			<label for="chk31">
-				<input type="checkbox" name="product" id="chk31" value="ogórek zielony">ogórek zielony</label>
+				<input type="checkbox" name="product" id="chk31" value="ogorek zielony">ogórek zielony</label>
 			<label for="chk32">
 				<input type="checkbox" name="product" id="chk32" value="olej">olej</label>
 			<label for="chk33">
@@ -131,37 +242,37 @@
 			<label for="chk39">
 				<input type="checkbox" name="product" id="chk39" value="rosol z kury">rosół z kury Kucharek</label>
 			<label for="chk40">
-				<input type="checkbox" name="product" id="chk40" value="ryż">ryż</label>
+				<input type="checkbox" name="product" id="chk40" value="ryz">ryż</label>
 			<label for="chk41">
-				<input type="checkbox" name="product" id="chk41" value="sałata">sałata</label>
+				<input type="checkbox" name="product" id="chk41" value="salata">sałata</label>
 			<label for="chk42">
 				<input type="checkbox" name="product" id="chk42" value="schab bez kosci" primary="true">schab bez kości</label>
 			<label for="chk43">
-				<input type="checkbox" name="product" id="chk43" value="ser żółty">ser żółty</label>
+				<input type="checkbox" name="product" id="chk43" value="ser zolty">ser żółty</label>
 			<label for="chk44">
-				<input type="checkbox" name="product" id="chk44" value="sól">sól</label>
+				<input type="checkbox" name="product" id="chk44" value="sol">sól</label>
 			<label for="chk45">
 				<input type="checkbox" name="product" id="chk45" value="szpinak">szpinak</label>
 			<label for="chk46">
 				<input type="checkbox" name="product" id="chk46" value="szynka" primary="true">szynka</label>
 			<label for="chk47">
-				<input type="checkbox" name="product" id="chk47" value="śmietana">śmietana</label>
+				<input type="checkbox" name="product" id="chk47" value="smietana">śmietana</label>
 			<label for="chk48">
 				<input type="checkbox" name="product" id="chk48" value="truskawki">truskawki</label>
 			<label for="chk49">
 				<input type="checkbox" name="product" id="chk49" value="wieprzowina" primary="true">wieprzowina</label>
 			<label for="chk50">
-				<input type="checkbox" name="product" id="chk50" value="wiórki kokosowe">wiórki kokosowe</label>
+				<input type="checkbox" name="product" id="chk50" value="wiorki kokosowe">wiórki kokosowe</label>
 			<label for="chk51">
-				<input type="checkbox" name="product" id="chk51" value="włoszczyzna">włoszczyzna</label>
+				<input type="checkbox" name="product" id="chk51" value="wloszczyzna">włoszczyzna</label>
 			<label for="chk52">
 				<input type="checkbox" name="product" id="chk52" value="woda">woda</label>
 			<label for="chk53">
-				<input type="checkbox" name="product" id="chk53" value="wołowina" primary="true">wołowina</label>
+				<input type="checkbox" name="product" id="chk53" value="wolowina" primary="true">wołowina</label>
 			<label for="chk54">
 				<input type="checkbox" name="product" id="chk54" value="ziemniaki" primary="true">ziemniaki</label>
       <a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
-			<a href="#recipes" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Pokaż wszystkie przepisy</a>
+			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showMeal();">Pokaż wszystkie przepisy</a>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
@@ -179,8 +290,11 @@
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button>
 		</div>
 		<div data-role="main" class="ui-content">
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getImage()">Dodaj zdjęcie</button>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto();">Dodaj zdjęcie</button>
 		</div>
+    <div data-role="main" class="ui-content">
+      <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">Wybierz zdjęcie</button>
+    </div>
 	</div>
 	<div data-role="page" id="recipes-page" class="recipes-page">
 		<div data-role="main" class="ui-content">
@@ -191,21 +305,16 @@
 	</div>
 	<div data-role="page" id="otherPage3" class="fourth-page">
 		<div data-role="main" class="ui-content">
-			<form>
-			<select name="meal" onclick="showMeal()">
-				<option>Fried chicken</option>
-			</select>
-			</form>
-			<br>
 			<div id="txtHint"><b>Przepisy:</b></div>
 		</div>
 	</div>
   <div data-role="page" id="recipes" class="recipes">
     <div data-role="main" class="ui-content" id="all-recipes">
-      <div title="Kurczak z ziemniakami" ingredients="kurczak ziemniaki" class="recipe">
+      <div title="Kurczak z ziemniakami" ingredients="piers z kurczaka ziemniaki" class="recipe">
         <h3>Kurczak z ziemniakami</h3>
         <p>1. Pokroicz kurczaka<br>2. Podsmażyć na patelni<br>3. Dodać pokrojone ziemniaki<br>4. Gotować przez 30 minut<br></p>
       </div>
     </div>
+  </div>
   </body>
 </html>

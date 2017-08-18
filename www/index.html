@@ -10,41 +10,138 @@
 	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 	<script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/jquery.mobile-1.4.5.js"></script>
-
-  <script>
+  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+  <script type="text/javascript" >
+  var pictureSource;
+  var destinationType;
   var selectedProducts = new Array();
+
+  function showMeal() {
+          if (window.XMLHttpRequest) {
+              xmlhttp = new XMLHttpRequest();
+          } else {
+              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+          }
+          xmlhttp.open("GET","http://jkrekora.cba.pl/recipes.html",true);
+          xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+              document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
+            }
+          }
+          xmlhttp.send();
+  }
   function showProducts(){
   	var productList = document.getElementById("product-list").getElementsByTagName("input");
   	for(i = 0; i < productList.length; i++){
-      if(productList[i].checked){
-        selectedProducts.push(productList[i].getAttribute("value"));
-        document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + productList[i].getAttribute("value") + "</b>";
-        }
+  		if(productList[i].checked){
+  			selectedProducts.push(productList[i].getAttribute("value"));
+  			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + productList[i].getAttribute("value") + "</b>";
+  			}
   	}
   }
-
   function getSelectedRecipes(){
-  	  if (selectedProducts.length==0) {
-          document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
-  		    document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;'><img align='middle' style='max-width: 50%; height: auto; width: auto;' src='img/talerz_pusty.jpg'/></div>";
-          return;
+  		if (selectedProducts.length==0) {
+  				document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
+  				document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;'><img align='middle' style='max-width: 50%; height: auto; width: auto;' src='img/talerz_pusty.jpg'/></div>";
+  				return;
+  		}
+  		else {
+  				var allRecipes =  document.getElementsByClassName("recipe");
+  				var recipesToShow = [];
+  				for(i=0; i < allRecipes.length; i++){
+  					for(j=0; j < selectedProducts.length; j++){
+  						if(allRecipes[i].getAttribute("ingredients").includes(selectedProducts[j])){
+  								recipesToShow.push(allRecipes[i]);
+  						}
+  					}
+  				}
+  			for(k = 0; k < recipesToShow.length; k++){
+  			if(!document.getElementById("recipe-list").innerHTML.includes(recipesToShow[k].innerHTML)){
+  				document.getElementById("recipe-list").innerHTML += recipesToShow[k].innerHTML;
+  			}
       }
-      else {
-          var allRecipes =  document.getElementsByClassName("recipe");
-          var recipesToShow = [];
-          for(i=0; i < allRecipes.length; i++){
-            for(j=0; j < selectedProducts.length; j++){
-              if(allRecipes[i].getAttribute("ingredients").includes(selectedProducts[j])){
-                  recipesToShow.push(allRecipes[i]);
-                }
-            }
-          }
-        for(k = 0; k < recipesToShow.length; k++){
-          document.getElementById("recipe-list").innerHTML += recipesToShow[k].innerHTML;
-        }
   }
 }
-  </script>
+          var pictureSource;   // picture source
+          var destinationType; // sets the format of returned value
+
+          // Wait for device API libraries to load
+          //
+          document.addEventListener("deviceready",onDeviceReady,false);
+
+          // device APIs are available
+          //
+          function onDeviceReady() {
+              pictureSource = navigator.camera.PictureSourceType;
+              destinationType = navigator.camera.DestinationType;
+          }
+
+
+          // Called when a photo is successfully retrieved
+          //
+          function onPhotoURISuccess(imageURI) {
+
+              // Show the selected image
+              var smallImage = document.getElementById('smallImage');
+              smallImage.style.display = 'block';
+              smallImage.src = imageURI;
+          }
+
+
+          // A button will call this function
+          //
+          function getPhoto(source) {
+            // Retrieve image file location from specified source
+            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+              destinationType: destinationType.FILE_URI,
+              sourceType: source });
+          }
+
+          function uploadPhoto() {
+
+              //selected photo URI is in the src attribute (we set this on getPhoto)
+              var imageURI = document.getElementById('smallImage').getAttribute("src");
+              if (!imageURI) {
+                  alert('Please select an image first.');
+                  return;
+              }
+
+              //set upload options
+              var options = new FileUploadOptions();
+              options.fileKey = "file";
+              options.fileName = imageURI.substr(imageURI.lastIndexOf('/')+1);
+              options.mimeType = "image/jpeg";
+
+/*              options.params = {
+                  firstname: document.getElementById("firstname").value,
+                  lastname: document.getElementById("lastname").value,
+                  workplace: document.getElementById("workplace").value
+              }*/
+
+              var ft = new FileTransfer();
+              ft.upload(imageURI, encodeURI("http://jkrekora.cba.pl/upload.php"), win, fail, options);
+          }
+
+          // Called if something bad happens.
+          //
+          function onFail(message) {
+            console.log('Failed because: ' + message);
+          }
+
+          function win(r) {
+              console.log("Code = " + r.responseCode);
+              console.log("Response = " + r.response);
+              //alert("Response =" + r.response);
+              console.log("Sent = " + r.bytesSent);
+          }
+
+          function fail(error) {
+              alert("An error has occurred: Code = " + error.code);
+              console.log("upload error source " + error.source);
+              console.log("upload error target " + error.target);
+          }
+
+</script>
 
   </head>
   <body onload="init()">
@@ -175,7 +272,7 @@
 			<label for="chk54">
 				<input type="checkbox" name="product" id="chk54" value="ziemniaki" primary="true">ziemniaki</label>
       <a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
-			<a href="#recipes" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Pokaż wszystkie przepisy</a>
+			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showMeal();">Pokaż wszystkie przepisy</a>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
@@ -193,8 +290,11 @@
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button>
 		</div>
 		<div data-role="main" class="ui-content">
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getImage()">Dodaj zdjęcie</button>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto();">Dodaj zdjęcie</button>
 		</div>
+    <div data-role="main" class="ui-content">
+      <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">Wybierz zdjęcie</button>
+    </div>
 	</div>
 	<div data-role="page" id="recipes-page" class="recipes-page">
 		<div data-role="main" class="ui-content">
@@ -205,12 +305,6 @@
 	</div>
 	<div data-role="page" id="otherPage3" class="fourth-page">
 		<div data-role="main" class="ui-content">
-			<form>
-			<select name="meal" onclick="showMeal()">
-				<option>Fried chicken</option>
-			</select>
-			</form>
-			<br>
 			<div id="txtHint"><b>Przepisy:</b></div>
 		</div>
 	</div>
@@ -221,5 +315,6 @@
         <p>1. Pokroicz kurczaka<br>2. Podsmażyć na patelni<br>3. Dodać pokrojone ziemniaki<br>4. Gotować przez 30 minut<br></p>
       </div>
     </div>
+  </div>
   </body>
 </html>
