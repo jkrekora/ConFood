@@ -10,7 +10,7 @@
             var title=$("#title").val();
             var ingredients=$("#ingredients").val();
             var recipe_text=$("#recipe_text").val();
-            var dataString="title="+title+"&ingredients="+ingredients+"&recipe_text="+recipe_text+"&insert=";
+            var dataString="title="+title+"&ingredients="+ingredients+"&recipe_text="+recipe_text;
             if($.trim(title).length>0 & $.trim(ingredients).length>0 & $.trim(recipe_text).length>0)
             {
               $.ajax({
@@ -21,15 +21,7 @@
              cache: false,
              beforeSend: function(dataString){ $("#insert").val("Connection...");},
              success: function(data){
-             if(data=="success")
-             {
-               alert("inserted");
-               $("#insert").val('submit');
-             }
-             else
-             {
-               alert(data);
-             }
+                $("#insert").val("Success");
              }
              });
              }return false;
@@ -41,7 +33,6 @@
   <div data-role="page" id="mainPage" class="main-page" align="center">
     <div data-role="header">
       <h1 class="title">Stworz swój przepis!</h1>
-      <a class="button button-clear" href="readjson.html">Read JSON</a>
     </div>
     <br/>
     <br/>

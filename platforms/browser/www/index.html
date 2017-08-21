@@ -10,7 +10,35 @@
 	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 	<script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/jquery.mobile-1.4.5.js"></script>
-  <script src="http://www.w3schools.com/lib/w3data.js"></script>
+  <script type="text/javascript">
+    function sendMyRecipe(){
+          var title=$("#title").val();
+          var ingredients=$("#ingredients").val();
+          var recipe_text=$("#recipe_text").val();
+          var dataString="title="+title+"&ingredients="+ingredients+"&recipe_text="+recipe_text;
+          if($.trim(title).length>0 & $.trim(ingredients).length>0 & $.trim(recipe_text).length>0)
+          {
+            $.ajax({
+           type: "POST",
+           url:"http://jkrekora.cba.pl/insert.php",
+           data: dataString,
+           crossDomain: true,
+           cache: false,
+           beforeSend: function(dataString){ $("#submit-recipe").val("Connection...");},
+           success: function(data){
+              $("#submit-recipe").val("Success");
+              }
+            });
+            document.getElementById("title").value='';
+            document.getElementById("ingredients").value='';
+            document.getElementById("recipe_text").value='';
+            $("#submit-recipe").val("Success");
+            }
+           else{
+              $("#submit-recipe").val("Failed");
+            }
+          };
+</script>
   <script type="text/javascript" >
   var pictureSource;
   var destinationType;
@@ -314,6 +342,7 @@
       <div id="recipe-list" class="recipe-list"></div>
 			<div id="optional-image"></div>
       <a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+      <a href="#myRecipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Dodaj własny przepiś</a>
 		</div>
 	</div>
 	<div data-role="page" id="otherPage3" class="fourth-page">
@@ -321,11 +350,23 @@
 			<div id="txtHint"><b>Przepisy:</b></div>
 		</div>
 	</div>
-  <div data-role="page" id="recipes" class="recipes">
-    <div data-role="main" class="ui-content" id="all-recipes">
-      <div title="Kurczak z ziemniakami" ingredients="piers z kurczaka ziemniaki" class="recipe">
-        <h3>Kurczak z ziemniakami</h3>
-        <p>1. Pokroicz kurczaka<br>2. Podsmażyć na patelni<br>3. Dodać pokrojone ziemniaki<br>4. Gotować przez 30 minut<br></p>
+  <div data-role="page" id="myRecipe" class="fourth-page">
+    <div data-role="main" class="ui-content">
+      <h2>Możesz dodać własny przepis!</h2>
+      <div class="item">
+        <label for="title">Nazwa</br>
+        <input type="text" id="title" value=""/></label>
+      </div>
+      <div class="item">
+        <label for="ingredients">Składniki</br>
+        <textarea rows="6" cols="50" id="ingredients" value=""></textarea></label>
+      </div>
+      <div class="item">
+        <label for="recipe_text">Przepis (Numeruj kroki np '1. Weż', '2. Pokroj')</br>
+        <textarea rows="6" cols="50" id="recipe_text" value=""/></textarea>
+      </div>
+      <div class="item">
+        <button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
       </div>
     </div>
   </div>
