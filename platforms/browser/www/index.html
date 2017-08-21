@@ -31,6 +31,7 @@
           xmlhttp.send();
   }
   function showProducts(){
+    document.getElementById("selected-products").innerHTML = "";
   	var productList = document.getElementById("product-list").getElementsByTagName("input");
   	for(i = 0; i < productList.length; i++){
   		if(productList[i].checked){
@@ -41,9 +42,11 @@
   }
   function getSelectedRecipes(){
     var selectedRecipesStr="";
+    document.getElementById("recipe-list").innerHTML = "";
+    document.getElementById("optional-image").innerHTML = "";
   		if (selectedProducts.length==0) {
-  				document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
-  				document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;'><img align='middle' style='max-width: 50%; height: auto; width: auto;' src='img/talerz_pusty.jpg'/></div>";
+  				document.getElementById("recipe-list").innerHTML = "<p align='center'>Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz<p>";
+  				document.getElementById("optional-image").innerHTML = "<div><img src='img/talerz_pusty.jpg'/></div>";
   				return;
   		}
   		else {
@@ -57,29 +60,19 @@
         xmlhttp.open("GET","http://jkrekora.cba.pl/selectedRecipes.php?ingredients="+selectedProducts[i],true);
         xmlhttp.onreadystatechange = function() {
           if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-            if(!document.getElementById("recipe-list").innerHTML.includes(xmlhttp.responseText.substring(xmlhttp.responseText.indexOf("<div id=\"response\">"), xmlhttp.responseText.indexOf("</div><!-- response -->")))){
+            var responseToText = xmlhttp.responseText.substring(xmlhttp.responseText.indexOf("<div id=\"response\">"), xmlhttp.responseText.lastIndexOf("response-end"));
+            if(!document.getElementById("recipe-list").innerHTML.includes(responseToText)){
               document.getElementById("recipe-list").innerHTML += xmlhttp.responseText;
+            }
+            if(document.getElementById("recipe-list").innerHTML==""){
+              document.getElementById("recipe-list").innerHTML = "<p align='center'>Nie znależiono przepisów wykorzystujących twoje skladniki. Wybierz inne skladniki.<br/> Albo może czas udać sie do sklepu? :)</p>";
+              document.getElementById("optional-image").innerHTML = "<div><img src='img/goshop.jpg'/></div>";
             }
           }
         }
         xmlhttp.send();
       }
-      }
-  			/*	var allRecipes =  document.getElementsByClassName("recipe");
-  				var recipesToShow = [];
-  				for(i=0; i < allRecipes.length; i++){
-  					for(j=0; j < selectedProducts.length; j++){
-  						if(allRecipes[i].getAttribute("ingredients").includes(selectedProducts[j])){
-  								recipesToShow.push(allRecipes[i]);
-  						}
-  					}
-  				}
-  			for(k = 0; k < recipesToShow.length; k++){
-  			if(!document.getElementById("recipe-list").innerHTML.includes(recipesToShow[k].innerHTML)){
-  				document.getElementById("recipe-list").innerHTML += recipesToShow[k].innerHTML;
-  			}
-      }
-  }*/
+    }
 }
           var pictureSource;   // picture source
           var destinationType; // sets the format of returned value
@@ -317,7 +310,8 @@
 	</div>
 	<div data-role="page" id="recipes-page" class="recipes-page">
 		<div data-role="main" class="ui-content">
-			<div id="recipe-list" class="recipe-list"><b>Możesz przygotować poniższe dania: </br></b></div>
+			<div id="recipe-list-header" class="recipe-list"><p align='center'><b>Możesz przygotować poniższe dania: </br></b></p></div>
+      <div id="recipe-list" class="recipe-list"></div>
 			<div id="optional-image"></div>
       <a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
 		</div>
