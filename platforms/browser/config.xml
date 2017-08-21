@@ -6,6 +6,9 @@
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
+    <feature name="BarcodeScanner">
+        <param name="browser-package" value="BarcodeScanner" />
+    </feature>
     <name>ConFood</name>
     <description>
         ConFood is an application that allows the user to display recipes for dishes made with his products.

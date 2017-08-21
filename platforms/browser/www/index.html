@@ -16,13 +16,13 @@
   var destinationType;
   var selectedProducts = new Array();
 
-  function showMeal() {
+  function showAllRecipes() {
           if (window.XMLHttpRequest) {
               xmlhttp = new XMLHttpRequest();
           } else {
               xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
           }
-          xmlhttp.open("GET","http://jkrekora.cba.pl/json.php",true);
+          xmlhttp.open("GET","http://jkrekora.cba.pl/allrecipes.php",true);
           xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == XMLHttpRequest.DONE) {
               document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
@@ -40,13 +40,32 @@
   	}
   }
   function getSelectedRecipes(){
+    var selectedRecipesStr="";
   		if (selectedProducts.length==0) {
   				document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
   				document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;'><img align='middle' style='max-width: 50%; height: auto; width: auto;' src='img/talerz_pusty.jpg'/></div>";
   				return;
   		}
   		else {
-  				var allRecipes =  document.getElementsByClassName("recipe");
+
+        for(i = 0; i < selectedProducts.length; i++){
+          if (window.XMLHttpRequest) {
+              xmlhttp = new XMLHttpRequest();
+          } else {
+              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+          }
+        xmlhttp.open("GET","http://jkrekora.cba.pl/selectedRecipes.php?ingredients="+selectedProducts[i],true);
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+            if(!document.getElementById("recipe-list").innerHTML.includes(xmlhttp.responseText.substring(xmlhttp.responseText.indexOf("<div id=\"response\">"), xmlhttp.responseText.indexOf("</div><!-- response -->")))){
+              document.getElementById("recipe-list").innerHTML += xmlhttp.responseText;
+            }
+          }
+        }
+        xmlhttp.send();
+      }
+      }
+  			/*	var allRecipes =  document.getElementsByClassName("recipe");
   				var recipesToShow = [];
   				for(i=0; i < allRecipes.length; i++){
   					for(j=0; j < selectedProducts.length; j++){
@@ -60,7 +79,7 @@
   				document.getElementById("recipe-list").innerHTML += recipesToShow[k].innerHTML;
   			}
       }
-  }
+  }*/
 }
           var pictureSource;   // picture source
           var destinationType; // sets the format of returned value
@@ -272,7 +291,7 @@
 			<label for="chk54">
 				<input type="checkbox" name="product" id="chk54" value="ziemniaki" primary="true">ziemniaki</label>
       <a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
-			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showMeal()">Pokaż wszystkie przepisy</a>
+			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showAllRecipes()">Pokaż wszystkie przepisy</a>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
