@@ -1,4 +1,5 @@
 var selectedProducts = new Array();
+
 function showProducts(){
 	var productList = document.getElementById("product-list").getElementsByTagName("input");
 	for(i = 0; i < productList.length; i++){
@@ -40,7 +41,7 @@ function showMeal() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("txtHint").innerHTML = this.responseText;
             }
-        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php",true);
+        xmlhttp.open("GET","http://jkrekora.cba.pl/json.php",true);
         xmlhttp.send();
     }
 }
