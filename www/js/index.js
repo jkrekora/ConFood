@@ -46,7 +46,6 @@ var destinationType;
 var selectedProducts=null;
 document.addEventListener("deviceready",onDeviceReady,false);
 function onDeviceReady(){
-    navigator.splashscreen.show();
     pictureSource=navigator.camera.PictureSourceType;
     destinationType=navigator.camera.DestinationType;
 }
