@@ -103,6 +103,12 @@ function onPhotoURISuccess(imageURI){
 }
 // A button will call this function
 //
+function onPhotoDataSuccess(imageURI){
+    var smallImage = document.getElementById('smallImage');
+    smallImage.style.display = 'block';
+    smallImage.src = imageURI;
+    movePic(imageURI);
+}
 function capturePhoto(){
     navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
         destinationType: destinationType.FILE_URI,

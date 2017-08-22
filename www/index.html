@@ -9,6 +9,7 @@
 		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 
 		<script src="js/index.js"></script>
+		<script src="cordova.js"></script>
 		<script src="js/jquery-2.1.4.min.js"></script>
 		<script src="js/jquery.mobile-1.4.5.js"></script>
 	</head>
@@ -148,7 +149,7 @@
 	</div>
 	<div data-role="page" id="otherPage2" class="third-page">
 		<div data-role="main" class="ui-content">
-			<div id="selected-products"><b>Wybrane produkty</b>
+			<div id="selected-products"><b>Wybrane produkty:</b>
       <p id="productCount"></p></div>
 		</div>
 		<div data-role="main" class="ui-content">
@@ -158,15 +159,15 @@
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button>
 		</div>
 		<div data-role="main" class="ui-content">
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto();">Dodaj zdjęcie</button>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto()">Dodaj zdjęcie</button>
 		</div>
     <div data-role="main" class="ui-content">
-      <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">Wybierz zdjęcie</button>
+      <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">Wybierz zdjęcie</button>
     </div>
 	</div>
 	<div data-role="page" id="recipes-page" class="recipes-page">
 		<div data-role="main" class="ui-content">
-			<div id="recipe-list-header" class="recipe-list"><p align='center'><b>Możesz przygotować poniższe dania:</br></b></p></div>
+			<div id="recipe-list-header" class="recipe-list"><p align='center'><b>Możesz przygotować poniższe dania:<br></b></p></div>
       <div id="recipe-list" class="recipe-list"></div>
 			<div id="optional-image"></div>
       <a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
@@ -182,16 +183,16 @@
 	<div data-role="main" class="ui-content">
 	  <h2>Możesz dodać własny przepis!</h2>
 	  <div class="item">
-		<label for="title">Nazwa</br>
+		<label for="title">Nazwa<br>
 		<input type="text" id="title" value=""/></label>
 	  </div>
 	  <div class="item">
-		<label for="ingredients">Składniki</br>
+		<label for="ingredients">Składniki<br>
 		<textarea rows="6" cols="50" id="ingredients" value=""></textarea></label>
 	  </div>
 	  <div class="item">
-		<label for="recipe_text">Przepis (Numeruj kroki np. '1. Weź', '2. Pokrój')</br>
-		<textarea rows="6" cols="50" id="recipe_text" value=""/></textarea></label>
+		<label for="recipe_text">Przepis (Numeruj kroki np. '1. Weź', '2. Pokrój')<br>
+		<textarea rows="6" cols="50" id="recipe_text" value=""></textarea></label>
 	  </div>
 	  <div class="item">
 		<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
