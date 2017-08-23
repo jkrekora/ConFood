@@ -1,197 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=yes, width=device-width">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=yes, width=device-width">
+		<title>ConFood</title>
 
-	<title>ConFood</title>
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 
-  <link rel="stylesheet" href="css/index.css" />
-	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
-	<script src="js/jquery-2.1.4.min.js"></script>
-  <script src="js/jquery.mobile-1.4.5.js"></script>
-  <script type="text/javascript">
-    function sendMyRecipe(){
-          var title=$("#title").val();
-          var ingredients=$("#ingredients").val();
-          var recipe_text=$("#recipe_text").val();
-          var dataString="title="+title+"&ingredients="+ingredients+"&recipe_text="+recipe_text;
-          if($.trim(title).length>0 & $.trim(ingredients).length>0 & $.trim(recipe_text).length>0)
-          {
-            $.ajax({
-           type: "POST",
-           url:"http://jkrekora.cba.pl/insert.php",
-           data: dataString,
-           crossDomain: true,
-           cache: false,
-           beforeSend: function(dataString){ $("#submit-recipe").val("Connection...");},
-           success: function(data){
-              $("#submit-recipe").val("Success");
-              }
-            });
-            document.getElementById("title").value='';
-            document.getElementById("ingredients").value='';
-            document.getElementById("recipe_text").value='';
-            $("#submit-recipe").val("Success");
-            }
-           else{
-              $("#submit-recipe").val("Failed");
-            }
-          };
-</script>
-  <script type="text/javascript" >
-  var pictureSource;
-  var destinationType;
-  var selectedProducts = new Array();
-
-  function showAllRecipes() {
-          if (window.XMLHttpRequest) {
-              xmlhttp = new XMLHttpRequest();
-          } else {
-              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-          }
-          xmlhttp.open("GET","http://jkrekora.cba.pl/allrecipes.php",true);
-          xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-              document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
-            }
-          }
-          xmlhttp.send();
-  }
-  function showProducts(){
-    document.getElementById("selected-products").innerHTML = "";
-  	var productList = document.getElementById("product-list").getElementsByTagName("input");
-  	for(i = 0; i < productList.length; i++){
-  		if(productList[i].checked){
-  			selectedProducts.push(productList[i].getAttribute("value"));
-  			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp-" + productList[i].getAttribute("value") + "</b>";
-  			}
-  	}
-  }
-  function getSelectedRecipes(){
-    var selectedRecipesStr="";
-    document.getElementById("recipe-list").innerHTML = "";
-    document.getElementById("optional-image").innerHTML = "";
-  		if (selectedProducts.length==0) {
-  				document.getElementById("recipe-list").innerHTML = "<p align='center'>Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz<p>";
-  				document.getElementById("optional-image").innerHTML = "<div><img src='img/talerz_pusty.jpg'/></div>";
-  				return;
-  		}
-  		else {
-
-        for(i = 0; i < selectedProducts.length; i++){
-          if (window.XMLHttpRequest) {
-              xmlhttp = new XMLHttpRequest();
-          } else {
-              xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-          }
-        xmlhttp.open("GET","http://jkrekora.cba.pl/selectedRecipes.php?ingredients="+selectedProducts[i],true);
-        xmlhttp.onreadystatechange = function() {
-          if (xmlhttp.readyState == XMLHttpRequest.DONE) {
-            var responseToText = xmlhttp.responseText.substring(xmlhttp.responseText.indexOf("<div id=\"response\">"), xmlhttp.responseText.lastIndexOf("response-end"));
-            if(!document.getElementById("recipe-list").innerHTML.includes(responseToText)){
-              document.getElementById("recipe-list").innerHTML += xmlhttp.responseText;
-            }
-            if(document.getElementById("recipe-list").innerHTML==""){
-              document.getElementById("recipe-list").innerHTML = "<p align='center'>Nie znależiono przepisów wykorzystujących twoje skladniki. Wybierz inne skladniki.<br/> Albo może czas udać sie do sklepu? :)</p>";
-              document.getElementById("optional-image").innerHTML = "<div><img src='img/goshop.jpg'/></div>";
-            }
-          }
-        }
-        xmlhttp.send();
-      }
-    }
-}
-          var pictureSource;   // picture source
-          var destinationType; // sets the format of returned value
-
-          // Wait for device API libraries to load
-          //
-          document.addEventListener("deviceready",onDeviceReady,false);
-
-          // device APIs are available
-          //
-          function onDeviceReady() {
-              pictureSource = navigator.camera.PictureSourceType;
-              destinationType = navigator.camera.DestinationType;
-          }
-
-
-          // Called when a photo is successfully retrieved
-          //
-          function onPhotoURISuccess(imageURI) {
-
-              // Show the selected image
-              var smallImage = document.getElementById('smallImage');
-              smallImage.style.display = 'block';
-              smallImage.src = imageURI;
-          }
-
-
-          // A button will call this function
-          //
-          function getPhoto(source) {
-            // Retrieve image file location from specified source
-            navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-              destinationType: destinationType.FILE_URI,
-              sourceType: source });
-          }
-
-          function uploadPhoto() {
-
-              //selected photo URI is in the src attribute (we set this on getPhoto)
-              var imageURI = document.getElementById('smallImage').getAttribute("src");
-              if (!imageURI) {
-                  alert('Please select an image first.');
-                  return;
-              }
-
-              //set upload options
-              var options = new FileUploadOptions();
-              options.fileKey = "file";
-              options.fileName = imageURI.substr(imageURI.lastIndexOf('/')+1);
-              options.mimeType = "image/jpeg";
-
-/*              options.params = {
-                  firstname: document.getElementById("firstname").value,
-                  lastname: document.getElementById("lastname").value,
-                  workplace: document.getElementById("workplace").value
-              }*/
-
-              var ft = new FileTransfer();
-              ft.upload(imageURI, encodeURI("http://jkrekora.cba.pl/upload.php"), win, fail, options);
-          }
-
-          // Called if something bad happens.
-          //
-          function onFail(message) {
-            console.log('Failed because: ' + message);
-          }
-
-          function win(r) {
-              console.log("Code = " + r.responseCode);
-              console.log("Response = " + r.response);
-              //alert("Response =" + r.response);
-              console.log("Sent = " + r.bytesSent);
-          }
-
-          function fail(error) {
-              alert("An error has occurred: Code = " + error.code);
-              console.log("upload error source " + error.source);
-              console.log("upload error target " + error.target);
-          }
-
-</script>
-
-  </head>
-  <body onload="init()">
+		<script src="js/index.js"></script>
+		<script src="cordova.js"></script>
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.js"></script>
+	</head>
+	<body onload="init()">
 	<div data-role="page" id="mainPage" class="main-page">
 		<div data-role="header">
 			<h1>ConFood</h1>
 		</div>
 		<div data-role="main" class="center">
 			<h2>Otwórz swoją lodówkę i kliknij przycisk u dołu :)</h2>
-			<center><a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></center>
+			<div style="text-align: center;"><a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></div>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
@@ -320,7 +149,7 @@
 	</div>
 	<div data-role="page" id="otherPage2" class="third-page">
 		<div data-role="main" class="ui-content">
-			<div id="selected-products"><b>Wybrane produkty</b>
+			<div id="selected-products"><b>Wybrane produkty:</b>
       <p id="productCount"></p></div>
 		</div>
 		<div data-role="main" class="ui-content">
@@ -330,19 +159,19 @@
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button>
 		</div>
 		<div data-role="main" class="ui-content">
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto();">Dodaj zdjęcie</button>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto()">Dodaj zdjęcie</button>
 		</div>
     <div data-role="main" class="ui-content">
-      <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">Wybierz zdjęcie</button>
+      <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">Wybierz zdjęcie</button>
     </div>
 	</div>
 	<div data-role="page" id="recipes-page" class="recipes-page">
 		<div data-role="main" class="ui-content">
-			<div id="recipe-list-header" class="recipe-list"><p align='center'><b>Możesz przygotować poniższe dania: </br></b></p></div>
+			<div id="recipe-list-header" class="recipe-list"><p align='center'><b>Możesz przygotować poniższe dania:<br></b></p></div>
       <div id="recipe-list" class="recipe-list"></div>
 			<div id="optional-image"></div>
       <a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
-      <a href="#myRecipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Dodaj własny przepiś</a>
+      <a href="#myRecipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Dodaj własny przepis</a>
 		</div>
 	</div>
 	<div data-role="page" id="otherPage3" class="fourth-page">
@@ -350,25 +179,25 @@
 			<div id="txtHint"><b>Przepisy:</b></div>
 		</div>
 	</div>
-  <div data-role="page" id="myRecipe" class="fourth-page">
-    <div data-role="main" class="ui-content">
-      <h2>Możesz dodać własny przepis!</h2>
-      <div class="item">
-        <label for="title">Nazwa</br>
-        <input type="text" id="title" value=""/></label>
-      </div>
-      <div class="item">
-        <label for="ingredients">Składniki</br>
-        <textarea rows="6" cols="50" id="ingredients" value=""></textarea></label>
-      </div>
-      <div class="item">
-        <label for="recipe_text">Przepis (Numeruj kroki np '1. Weż', '2. Pokroj')</br>
-        <textarea rows="6" cols="50" id="recipe_text" value=""/></textarea>
-      </div>
-      <div class="item">
-        <button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
-      </div>
-    </div>
-  </div>
-  </body>
+	<div data-role="page" id="myRecipe" class="fourth-page">
+	<div data-role="main" class="ui-content">
+	  <h2>Możesz dodać własny przepis!</h2>
+	  <div class="item">
+		<label for="title">Nazwa<br>
+		<input type="text" id="title" value=""/></label>
+	  </div>
+	  <div class="item">
+		<label for="ingredients">Składniki<br>
+		<textarea rows="6" cols="50" id="ingredients" value=""></textarea></label>
+	  </div>
+	  <div class="item">
+		<label for="recipe_text">Przepis (Numeruj kroki np. '1. Weź', '2. Pokrój')<br>
+		<textarea rows="6" cols="50" id="recipe_text" value=""></textarea></label>
+	  </div>
+	  <div class="item">
+		<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
+	  </div>
+	</div>
+	</div>
+	</body>
 </html>
