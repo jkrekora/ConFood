@@ -41,6 +41,7 @@ function showAllRecipes(){
     xmlhttp.send();
 }
 function showProducts(){
+<<<<<<< HEAD
     selectedProducts.length=0;
     document.getElementById("selected-products").innerHTML = "";
     var productList = document.getElementById("product-list").getElementsByTagName("input");
@@ -199,6 +200,51 @@ function showMeal(){
     }
 }
 var pictureSource;
+=======
+    var productList = document.getElementById("product-list");
+	selectedProducts = productList.getElementsByTagName("input");
+	for(i = 0; i < selectedProducts.length; i++){
+		if(selectedProducts[i].checked){
+			document.getElementById("selected-products").innerHTML += "<br/><b>&nbsp&nbsp&nbsp- " + selectedProducts[i].getAttribute("value") + "</b>";
+		}
+	}
+}
+function getSelectedRecipes(){
+    if (selectedProducts==null){
+        document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
+        document.getElementById("optional-image").innerHTML = "<img src='img/talerz_pusty.jpg'/>";
+        return;
+    } else{
+        if (window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        } else{
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200){
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q=", true);
+        xmlhttp.send();
+    }
+}
+function showMeal(){
+    if (window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+    } else{
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200){
+            document.getElementById("txtHint").innerHTML = this.responseText;
+        }
+        xmlhttp.open("GET","http://jkrekora.cba.pl/db.php?q=str",true);
+        xmlhttp.send();
+    }
+}
+var pictureSource;   
+>>>>>>> origin
 var destinationType;
 var selectedProducts=null;
 document.addEventListener("deviceready",onDeviceReady,false);
@@ -225,6 +271,7 @@ function movePic(file){
 }
 function resolveOnSuccess(entry){
     var d = new Date();
+<<<<<<< HEAD
     var n = d.getTime();
     var newFileName = n + ".jpg";
     var myFolderApp = "ConFood";
@@ -238,6 +285,18 @@ function resolveOnSuccess(entry){
                 resOnError);
     },
         resOnError);
+=======
+    var n = d.getTime();var newFileName = n + ".jpg";
+    var myFolderApp = "ConFood";
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys){
+            var direct = fileSys.root;
+            direct.getDirectory( myFolderApp,{
+                    create:true, exclusive: false},
+                function(myFolderApp){
+                    entry.moveTo(myFolderApp, newFileName,  successMove,  resOnError);
+                    }, resOnError);
+    }, resOnError);
+>>>>>>> origin
 }
 function successMove(entry){
     sessionStorage.setItem('imagepath', entry.fullPath);
@@ -248,7 +307,11 @@ function resOnError(error){
 function getImage(){
     navigator.camera.getPicture(uploadPhoto, function(message){
         alert('get picture failed');
+<<<<<<< HEAD
     },{
+=======
+    }, {
+>>>>>>> origin
         quality: 100,
         destinationType: navigator.camera.DestinationType.FILE_URI,
         sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
@@ -268,7 +331,14 @@ function uploadPhoto(imageURI){
     var ft = new FileTransfer();
     ft.upload(imageURI, "http://jkrekora.cba.pl/upload.php", function(result){
         console.log(JSON.stringify(result));
+<<<<<<< HEAD
     }, function(error){
         console.log(JSON.stringify(error));
     }, options);
 } */
+=======
+ }, function(error){
+        console.log(JSON.stringify(error));
+ }, options);
+ }
+>>>>>>> origin

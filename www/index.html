@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=yes, width=device-width">
@@ -14,19 +15,37 @@
 		<script src="js/jquery.mobile-1.4.5.js"></script>
 	</head>
 	<body onload="init()">
+=======
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<title>ConFood</title>
+    <script src="cordova.js"></script>
+    <link rel="stylesheet" href="css/index.css" />
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+	<script src="js/index.js"></script>
+	<script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery.mobile-1.4.5.js"></script>
+  </head>
+  <body onload="init()">
+>>>>>>> origin
 	<div data-role="page" id="mainPage" class="main-page">
 		<div data-role="header">
 			<h1>ConFood</h1>
 		</div>
 		<div data-role="main" class="center">
 			<h2>Otwórz swoją lodówkę i kliknij przycisk u dołu :)</h2>
+<<<<<<< HEAD
 			<div style="text-align: center;"><a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></div>
+=======
+			<div style="text-align: center;"><a href="#secondPage" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></div>
+>>>>>>> origin
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
 		</div>
 	</div>
-	<div data-role="page" id="otherPage1" class="second-page">
+	<div data-role="page" id="secondPage" class="second-page">
 		<div data-role="header">
 			<h1>ConFood</h1>
 		</div>
@@ -34,6 +53,7 @@
 			<h2>Wskaż produkty, które masz w lodówce:</h2>
 			<label for="chk1">
 				<input type="checkbox" name="product" id="chk1" value="awokado">awokado</label>
+<<<<<<< HEAD
 			<label for="chk2">
 				<input type="checkbox" name="product" id="chk2" value="boczek wedzony" primary="true">boczek wędzony</label>
 			<label for="chk3">
@@ -142,11 +162,16 @@
 				<input type="checkbox" name="product" id="chk54" value="ziemniaki" primary="true">ziemniaki</label>
       <a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
 			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showAllRecipes()">Pokaż wszystkie przepisy</a>
+=======
+			<a href="#thirdPage" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a><br>
+			<a href="#fifthPage" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Pokaż wszystkie przepisy</a>
+>>>>>>> origin
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
 		</div>
 	</div>
+<<<<<<< HEAD
 	<div data-role="page" id="otherPage2" class="third-page">
 		<div data-role="main" class="ui-content">
 			<div id="selected-products"><b>Wybrane produkty:</b>
@@ -160,21 +185,37 @@
 		</div>
 		<div data-role="main" class="ui-content">
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto()">Dodaj zdjęcie</button>
+=======
+	<div data-role="page" id="thirdPage" class="third-page">
+		<div data-role="main" class="ui-content">
+			<div id="selected-products"><b>Wybrane produkty:</b></div><br>
+			<a href="#fourthPage" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes()">Pokaż przepisy</a><br>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button><br>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getImage()">Dodaj zdjęcie</button>
+>>>>>>> origin
 		</div>
     <div data-role="main" class="ui-content">
       <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">Wybierz zdjęcie</button>
     </div>
 	</div>
-	<div data-role="page" id="recipes-page" class="recipes-page">
+	<div data-role="page" id="fourthPage" class="fourth-page">
 		<div data-role="main" class="ui-content">
+<<<<<<< HEAD
 			<div id="recipe-list-header" class="recipe-list"><p align='center'><b>Możesz przygotować poniższe dania:<br></b></p></div>
       <div id="recipe-list" class="recipe-list"></div>
+=======
+			<div id="recipe-list"><b>Możesz przygotować poniższe dania:<br></b></div>
+>>>>>>> origin
 			<div id="optional-image"></div>
       <a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
       <a href="#myRecipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Dodaj własny przepis</a>
 		</div>
 	</div>
+<<<<<<< HEAD
 	<div data-role="page" id="otherPage3" class="fourth-page">
+=======
+	<div data-role="page" id="fifthPage" class="fifth-page">
+>>>>>>> origin
 		<div data-role="main" class="ui-content">
 			<div id="txtHint"><b>Przepisy:</b></div>
 		</div>
