@@ -78,7 +78,7 @@ function getSelectedRecipes(){
                           document.getElementById("recipe-list").innerHTML += detailsPageContent;
                       }
                     }
-                    if(document.getElementById("recipe-list").innerHTML==""){
+                    if(document.getElementById("recipe-list").innerHTML==" "){
                         document.getElementById("recipe-list").innerHTML = "<p align='center'>Nie znależiono przepisów wykorzystujących twoje skladniki. Wybierz inne skladniki.<br/> Albo może czas udać sie do sklepu? :)</p>";
                         document.getElementById("optional-image").innerHTML = "<div><img src='img/goshop.jpg'/ class='center'></div>";
                     }
