@@ -1,15 +1,16 @@
 .main-page {
     background:  transparent url(../img/main-wallpaper.jpg) no-repeat center center;
     background-size: cover;
+    text-align: center;
 }
-.recipe-list{
+.recipe-list h3, .recipe-list {
    margin-left: auto;
    margin-right: auto;
+   text-align: auto;
 }
-.img{
-  position: absolute;
-  top: 0; bottom:0; left: 0; right:0;
-  margin: auto;
+.center {
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .rating {

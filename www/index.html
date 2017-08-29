@@ -183,21 +183,25 @@
 	<div data-role="main" class="ui-content">
 	  <h2>Możesz dodać własny przepis!</h2>
 	  <div class="item">
-		<label for="title">Nazwa<br>
-		<input type="text" id="title" value=""/></label>
+			<label for="title">Nazwa<br>
+				<input type="text" id="title" value=""/></label>
 	  </div>
 	  <div class="item">
-		<label for="ingredients">Składniki<br>
-		<textarea rows="6" cols="50" id="ingredients" value=""></textarea></label>
+				<label for="ingredients">Składniki<br>
+					<textarea rows="6" cols="50" id="ingredients" value=""></textarea></label>
 	  </div>
 	  <div class="item">
-		<label for="recipe_text">Przepis (Numeruj kroki np. '1. Weź', '2. Pokrój')<br>
-		<textarea rows="6" cols="50" id="recipe_text" value=""></textarea></label>
+				<label for="recipe_text">Przepis (Numeruj kroki np. '1. Weź', '2. Pokrój')<br>
+					<textarea rows="6" cols="50" id="recipe_text" value=""></textarea></label>
 	  </div>
 	  <div class="item">
-		<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
+				<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
 	  </div>
+			<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
 	</div>
+	</div>
+	<div data-role="page" id="recipeDetails" class="fourth-page">
+		<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
 	</div>
 	</body>
 </html>
