@@ -1,4 +1,29 @@
 .main-page {
-    background:  transparent url(../img/main-wallpaper.png) no-repeat center center;
+    background:  transparent url(../img/main-wallpaper.jpg) no-repeat center center;
     background-size: cover;
+    text-align: center;
+}
+.recipe-list h3, .recipe-list {
+   margin-left: auto;
+   margin-right: auto;
+   text-align: auto;
+}
+.center {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
 }

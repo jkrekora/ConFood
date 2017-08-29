@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ConFood.iml" filepath="$PROJECT_DIR$/ConFood.iml" />
+      <module fileurl="file://C://ConFood_jkrekora/ConFood_jkrekora.iml" filepath="C://ConFood_jkrekora/ConFood_jkrekora.iml" />
     </modules>
   </component>
 </project>

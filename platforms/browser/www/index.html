@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    
-	<title>ConFood</title>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=yes, width=device-width">
+		<title>ConFood</title>
 
-    <link rel="stylesheet" href="css/index.css" />
-	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
-    
-	<script src="cordova.js"></script>
-	<script src="js/index.js"></script>
-	<script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/jquery.mobile-1.4.5.js"></script>
+		<link rel="stylesheet" href="css/index.css" />
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
 
-  </head>
-  <body onload="init()">
+		<script src="js/index.js"></script>
+		<script src="cordova.js"></script>
+		<script src="js/jquery-2.1.4.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.js"></script>
+	</head>
+	<body onload="init()">
 	<div data-role="page" id="mainPage" class="main-page">
 		<div data-role="header">
 			<h1>ConFood</h1>
 		</div>
 		<div data-role="main" class="center">
 			<h2>Otwórz swoją lodówkę i kliknij przycisk u dołu :)</h2>
-			<center><a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></center>
+			<div style="text-align: center;"><a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></div>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
@@ -37,11 +35,11 @@
 			<label for="chk1">
 				<input type="checkbox" name="product" id="chk1" value="awokado">awokado</label>
 			<label for="chk2">
-				<input type="checkbox" name="product" id="chk2" value="boczek wędzony">boczek wędzony</label>
+				<input type="checkbox" name="product" id="chk2" value="boczek wedzony" primary="true">boczek wędzony</label>
 			<label for="chk3">
-				<input type="checkbox" name="product" id="chk3" value="bułka tarta">bułka tarta</label>
+				<input type="checkbox" name="product" id="chk3" value="bulka tarta">bułka tarta</label>
 			<label for="chk4">
-				<input type="checkbox" name="product" id="chk4" value="cebula biała">cebula biała</label>
+				<input type="checkbox" name="product" id="chk4" value="cebula biala">cebula biała</label>
 			<label for="chk5">
 				<input type="checkbox" name="product" id="chk5" value="cebula czerwona">cebula czerwona</label>
 			<label for="chk6">
@@ -55,17 +53,17 @@
 			<label for="chk10">
 				<input type="checkbox" name="product" id="chk10" value="czosnek">czosnek</label>
 			<label for="chk11">
-				<input type="checkbox" name="product" id="chk11" value="drożdże">drożdże</label>
+				<input type="checkbox" name="product" id="chk11" value="drozdze">drożdże</label>
 			<label for="chk12">
-				<input type="checkbox" name="product" id="chk12" value="jabłka">jabłka</label>
+				<input type="checkbox" name="product" id="chk12" value="jablka">jabłka</label>
 			<label for="chk13">
-				<input type="checkbox" name="product" id="chk13" value="jajka">jajka</label>
+				<input type="checkbox" name="product" id="chk13" value="jajka" primary="true" >jajka</label>
 			<label for="chk14">
-				<input type="checkbox" name="product" id="chk14" value="jajko">jajko</label>
+				<input type="checkbox" name="product" id="chk14" value="jajko" primary="true">jajko</label>
 			<label for="chk15">
 				<input type="checkbox" name="product" id="chk15" value="jogurt naturalny">jogurt naturalny</label>
 			<label for="chk16">
-				<input type="checkbox" name="product" id="chk16" value="kiełbasa">kiełbasa</label>
+				<input type="checkbox" name="product" id="chk16" value="kielbasa" primary="true">kiełbasa</label>
 			<label for="chk17">
 				<input type="checkbox" name="product" id="chk17" value="kokos">kokos</label>
 			<label for="chk18">
@@ -73,77 +71,77 @@
 			<label for="chk19">
 				<input type="checkbox" name="product" id="chk19" value="majonez">majonez</label>
 			<label for="chk20">
-				<input type="checkbox" name="product" id="chk20" value="makaron">makaron</label>
+				<input type="checkbox" name="product" id="chk20" value="makaron" primary="true">makaron</label>
 			<label for="chk21">
 				<input type="checkbox" name="product" id="chk21" value="marchew">marchew</label>
 			<label for="chk22">
 				<input type="checkbox" name="product" id="chk22" value="margaryna">margaryna</label>
 			<label for="chk23">
-				<input type="checkbox" name="product" id="chk23" value="masło">masło</label>
+				<input type="checkbox" name="product" id="chk23" value="maslo">masło</label>
 			<label for="chk24">
-				<input type="checkbox" name="product" id="chk24" value="mąka">mąka</label>
+				<input type="checkbox" name="product" id="chk24" value="maka">mąka</label>
 			<label for="chk25">
-				<input type="checkbox" name="product" id="chk25" value="mięso mielone">mięso mielone</label>
+				<input type="checkbox" name="product" id="chk25" value="mieso mielone" primary="true">mięso mielone</label>
 			<label for="chk26">
-				<input type="checkbox" name="product" id="chk26" value="miód">miód</label>
+				<input type="checkbox" name="product" id="chk26" value="miod">miód</label>
 			<label for="chk27">
 				<input type="checkbox" name="product" id="chk27" value="mleko">mleko</label>
 			<label for="chk28">
 				<input type="checkbox" name="product" id="chk28" value="musztarda">musztarda</label>
 			<label for="chk29">
-				<input type="checkbox" name="product" id="chk29" value="Product29">natka pietruszki</label>
+				<input type="checkbox" name="product" id="chk29" value="natka pietruszki">natka pietruszki</label>
 			<label for="chk30">
-				<input type="checkbox" name="product" id="chk30" value="Product30">ocet winny</label>
+				<input type="checkbox" name="product" id="chk30" value="ocet winny">ocet winny</label>
 			<label for="chk31">
-				<input type="checkbox" name="product" id="chk31" value="Product31">ogórek zielony</label>
+				<input type="checkbox" name="product" id="chk31" value="ogorek zielony">ogórek zielony</label>
 			<label for="chk32">
-				<input type="checkbox" name="product" id="chk32" value="Product32">olej</label>
+				<input type="checkbox" name="product" id="chk32" value="olej">olej</label>
 			<label for="chk33">
-				<input type="checkbox" name="product" id="chk33" value="Product33">oliwa z oliwek</label>
+				<input type="checkbox" name="product" id="chk33" value="oliwa z oliwek">oliwa z oliwek</label>
 			<label for="chk34">
-				<input type="checkbox" name="product" id="chk34" value="Product34">pieczarki</label>
+				<input type="checkbox" name="product" id="chk34" value="pieczarki">pieczarki</label>
 			<label for="chk35">
-				<input type="checkbox" name="product" id="chk35" value="Product35">pieprz</label>
+				<input type="checkbox" name="product" id="chk35" value="pieprz">pieprz</label>
 			<label for="chk36">
-				<input type="checkbox" name="product" id="chk36" value="Product36">pierś z kurczaka</label>
+				<input type="checkbox" name="product" id="chk36" value="piers z kurczaka" primary="true">pierś z kurczaka</label>
 			<label for="chk37">
-				<input type="checkbox" name="product" id="chk37" value="Product37">pomidor</label>
+				<input type="checkbox" name="product" id="chk37" value="pomidor">pomidor</label>
 			<label for="chk38">
-				<input type="checkbox" name="product" id="chk38" value="Product38">proszek do pieczenia</label>
+				<input type="checkbox" name="product" id="chk38" value="proszek do pieczenia">proszek do pieczenia</label>
 			<label for="chk39">
-				<input type="checkbox" name="product" id="chk39" value="Product39">rosół z kury Kucharek</label>
+				<input type="checkbox" name="product" id="chk39" value="rosol z kury">rosół z kury Kucharek</label>
 			<label for="chk40">
-				<input type="checkbox" name="product" id="chk40" value="Product40">ryż</label>
+				<input type="checkbox" name="product" id="chk40" value="ryz">ryż</label>
 			<label for="chk41">
-				<input type="checkbox" name="product" id="chk41" value="Product41">sałata</label>
+				<input type="checkbox" name="product" id="chk41" value="salata">sałata</label>
 			<label for="chk42">
-				<input type="checkbox" name="product" id="chk42" value="Product42">schab bez kości</label>
+				<input type="checkbox" name="product" id="chk42" value="schab bez kosci" primary="true">schab bez kości</label>
 			<label for="chk43">
-				<input type="checkbox" name="product" id="chk43" value="Product43">ser żółty</label>
+				<input type="checkbox" name="product" id="chk43" value="ser zolty">ser żółty</label>
 			<label for="chk44">
-				<input type="checkbox" name="product" id="chk44" value="Product44">sól</label>
+				<input type="checkbox" name="product" id="chk44" value="sol">sól</label>
 			<label for="chk45">
-				<input type="checkbox" name="product" id="chk45" value="Product45">szpinak</label>
+				<input type="checkbox" name="product" id="chk45" value="szpinak">szpinak</label>
 			<label for="chk46">
-				<input type="checkbox" name="product" id="chk46" value="Product46">szynka</label>
+				<input type="checkbox" name="product" id="chk46" value="szynka" primary="true">szynka</label>
 			<label for="chk47">
-				<input type="checkbox" name="product" id="chk47" value="Product47">śmietana</label>
+				<input type="checkbox" name="product" id="chk47" value="smietana">śmietana</label>
 			<label for="chk48">
-				<input type="checkbox" name="product" id="chk48" value="Product48">truskawki</label>
+				<input type="checkbox" name="product" id="chk48" value="truskawki">truskawki</label>
 			<label for="chk49">
-				<input type="checkbox" name="product" id="chk49" value="Product49">wieprzowina</label>
+				<input type="checkbox" name="product" id="chk49" value="wieprzowina" primary="true">wieprzowina</label>
 			<label for="chk50">
-				<input type="checkbox" name="product" id="chk50" value="Product50">wiórki kokosowe</label>
+				<input type="checkbox" name="product" id="chk50" value="wiorki kokosowe">wiórki kokosowe</label>
 			<label for="chk51">
-				<input type="checkbox" name="product" id="chk51" value="Product51">włoszczyzna</label>
+				<input type="checkbox" name="product" id="chk51" value="wloszczyzna">włoszczyzna</label>
 			<label for="chk52">
-				<input type="checkbox" name="product" id="chk52" value="Product52">woda</label>
+				<input type="checkbox" name="product" id="chk52" value="woda">woda</label>
 			<label for="chk53">
-				<input type="checkbox" name="product" id="chk53" value="Product53">wołowina</label>
+				<input type="checkbox" name="product" id="chk53" value="wolowina" primary="true">wołowina</label>
 			<label for="chk54">
-				<input type="checkbox" name="product" id="chk54" value="Product54">ziemniaki</label>
-			<a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
-			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Pokaż wszystkie przepisy</a>
+				<input type="checkbox" name="product" id="chk54" value="ziemniaki" primary="true">ziemniaki</label>
+      <a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
+			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showAllRecipes()">Pokaż wszystkie przepisy</a>
 		</div>
 		<div data-role="footer" data-position="fixed">
 			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
@@ -151,7 +149,8 @@
 	</div>
 	<div data-role="page" id="otherPage2" class="third-page">
 		<div data-role="main" class="ui-content">
-			<div id="selected-products"><b>Wybrane produkty</b></div>
+			<div id="selected-products"><b>Wybrane produkty:</b>
+      <p id="productCount"></p></div>
 		</div>
 		<div data-role="main" class="ui-content">
 			<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes()">Pokaż przepisy</a>
@@ -160,25 +159,49 @@
 			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button>
 		</div>
 		<div data-role="main" class="ui-content">
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getImage()">Dodaj zdjęcie</button>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto()">Dodaj zdjęcie</button>
 		</div>
+    <div data-role="main" class="ui-content">
+      <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">Wybierz zdjęcie</button>
+    </div>
 	</div>
 	<div data-role="page" id="recipes-page" class="recipes-page">
 		<div data-role="main" class="ui-content">
-			<div id="recipe-list"><b>Możesz przygotować poniższe dania: </br></b></div>
+			<div id="recipe-list-header" class="recipe-list"><p align='center'><b>Możesz przygotować poniższe dania:<br></b></p></div>
+      <div id="recipe-list" class="recipe-list"></div>
 			<div id="optional-image"></div>
+      <a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+      <a href="#myRecipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Dodaj własny przepis</a>
 		</div>
 	</div>
-		<div data-role="page" id="otherPage3" class="fourth-page">
+	<div data-role="page" id="otherPage3" class="fourth-page">
 		<div data-role="main" class="ui-content">
-			<form>
-			<select name="meal" onclick="showMeal()">
-				<option>Fried chicken</option>
-			</select>
-			</form>
-			<br>
 			<div id="txtHint"><b>Przepisy:</b></div>
 		</div>
 	</div>
-  </body>
+	<div data-role="page" id="myRecipe" class="fourth-page">
+	<div data-role="main" class="ui-content">
+	  <h2>Możesz dodać własny przepis!</h2>
+	  <div class="item">
+			<label for="title">Nazwa<br>
+				<input type="text" id="title" value=""/></label>
+	  </div>
+	  <div class="item">
+				<label for="ingredients">Składniki<br>
+					<textarea rows="6" cols="50" id="ingredients" value=""></textarea></label>
+	  </div>
+	  <div class="item">
+				<label for="recipe_text">Przepis (Numeruj kroki np. '1. Weź', '2. Pokrój')<br>
+					<textarea rows="6" cols="50" id="recipe_text" value=""></textarea></label>
+	  </div>
+	  <div class="item">
+				<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
+	  </div>
+			<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+	</div>
+	</div>
+	<div data-role="page" id="recipeDetails" class="fourth-page">
+		<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+	</div>
+	</body>
 </html>

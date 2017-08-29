@@ -3,11 +3,11 @@
     <name>ConFood</name>
     <description>
         ConFood is an application that allows the user to display recipes for dishes made with his products.
-		User can rate, comment, add picture of prepared dish. He also has the ability to add his own recipe.
+        User can rate, comment, add picture of prepared dish. He also has the ability to add his own recipe.
     </description>
     <author email="jakub_krekora@wp.pl" href="https://github.com/jkrekora/ConFood">
         Jakub Krekora - student's index number: 180733, type of studies: stationary, group number: KrDUIs1012
-		Serhiy Karaptan - student's index number: 182368, type of studies: stationary, group number: KrDUIs1012
+        Serhiy Karaptan - student's index number: 182368, type of studies: stationary, group number: KrDUIs1012
     </author>
 
     <preference name="orientation" value="portrait" />
