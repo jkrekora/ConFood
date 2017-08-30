@@ -14,7 +14,7 @@
 		<script src="js/jquery.mobile-1.4.5.js"></script>
 	</head>
 	<body onload="init()">
-	<div data-role="page" id="mainPage" class="main-page">
+	<div data-role="page" id="mainPage" class="main-page background">
 		<div data-role="header">
 			<h1>ConFood</h1>
 		</div>
@@ -23,7 +23,7 @@
 			<div style="text-align: center;"><a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Zaczynam</a></div>
 		</div>
 		<div data-role="footer" data-position="fixed">
-			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
+			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
 		</div>
 	</div>
 	<div data-role="page" id="otherPage1" class="second-page">
@@ -140,68 +140,111 @@
 				<input type="checkbox" name="product" id="chk53" value="wolowina" primary="true">wołowina</label>
 			<label for="chk54">
 				<input type="checkbox" name="product" id="chk54" value="ziemniaki" primary="true">ziemniaki</label>
-      <a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
-			<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showAllRecipes()">Pokaż wszystkie przepisy</a>
+			<div style="text-align: center;">
+				<a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showProducts()">Gotowe</a>
+				<a href="#otherPage3" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="showAllRecipes()">Pokaż wszystkie przepisy</a>
+				<a href="#mainPage" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+			</div>
 		</div>
 		<div data-role="footer" data-position="fixed">
-			<h1>(c) Jakub Krekora & Serhiy Karaptan</h1>
+			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
 		</div>
 	</div>
 	<div data-role="page" id="otherPage2" class="third-page">
-		<div data-role="main" class="ui-content">
-			<div id="selected-products"><b>Wybrane produkty:</b>
-      <p id="productCount"></p></div>
+		<div data-role="header">
+			<h1>ConFood</h1>
 		</div>
 		<div data-role="main" class="ui-content">
-			<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes()">Pokaż przepisy</a>
+			<b>Wybrane produkty:</b>
+			<div id="selected-products"><p id="productCount"></p></div><br><br>
+			<div style="text-align: center;">
+				<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes()">Pokaż przepisy</a><br><br>
+				<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button><br><br>
+				<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto()">Dodaj zdjęcie</button><br><br>
+				<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">Wybierz zdjęcie</button><br><br>
+				<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+			</div>
 		</div>
-		<div data-role="main" class="ui-content">
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button>
+		<div data-role="footer" data-position="fixed">
+			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
 		</div>
-		<div data-role="main" class="ui-content">
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto()">Dodaj zdjęcie</button>
-		</div>
-    <div data-role="main" class="ui-content">
-      <button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">Wybierz zdjęcie</button>
-    </div>
 	</div>
 	<div data-role="page" id="recipes-page" class="recipes-page">
+		<div data-role="header">
+			<h1>ConFood</h1>
+		</div>
 		<div data-role="main" class="ui-content">
-			<div id="recipe-list-header" class="recipe-list"><p align='center'><b>Możesz przygotować poniższe dania:<br></b></p></div>
-      <div id="recipe-list" class="recipe-list"></div>
-			<div id="optional-image"></div>
-      <a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
-      <a href="#myRecipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Dodaj własny przepis</a>
+			<div id="recipe-list-header" class="recipe-list"><p><b>Możesz przygotować poniższe dania:</b></p></div>
+			<div id="recipe-list" class="recipe-list"></div>
+			<div class="span4">
+				<div id="optional-image"></div>
+			</div>
+			<div style="text-align: center;">
+				<a href="#myRecipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Dodaj własny przepis</a>
+				<a href="#otherPage2" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
 		</div>
 	</div>
 	<div data-role="page" id="otherPage3" class="fourth-page">
+		<div data-role="header">
+			<h1>ConFood</h1>
+		</div>
 		<div data-role="main" class="ui-content">
-			<div id="txtHint"><b>Przepisy:</b></div>
+			<b>Przepisy:</b>
+			<div id="txtHint"></div><br><br>
+			<div style="text-align: center;">
+				<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a><br><br>
+			</div>
+
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
 		</div>
 	</div>
-	<div data-role="page" id="myRecipe" class="fourth-page">
-	<div data-role="main" class="ui-content">
-	  <h2>Możesz dodać własny przepis!</h2>
-	  <div class="item">
-			<label for="title">Nazwa<br>
-				<input type="text" id="title" value=""/></label>
-	  </div>
-	  <div class="item">
+	<div data-role="page" id="myRecipe" class="myRecipe">
+		<div data-role="header">
+			<h1>ConFood</h1>
+		</div>
+		<div data-role="main" class="ui-content">
+			<h2>Możesz dodać własny przepis!</h2>
+			<div class="item">
+				<label for="title">Nazwa<br>
+					<input type="text" id="title" value=""/></label>
+			</div>
+			<div class="item">
 				<label for="ingredients">Składniki<br>
 					<textarea rows="6" cols="50" id="ingredients" value=""></textarea></label>
-	  </div>
-	  <div class="item">
+			</div>
+			<div class="item">
 				<label for="recipe_text">Przepis (Numeruj kroki np. '1. Weź', '2. Pokrój')<br>
 					<textarea rows="6" cols="50" id="recipe_text" value=""></textarea></label>
-	  </div>
-	  <div class="item">
-				<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
-	  </div>
-			<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+			</div>
+			<div style="text-align: center;">
+				<div class="item">
+					<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
+					<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+				</div>
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
+		</div>
 	</div>
-	</div>
-	<div data-role="page" id="recipeDetails" class="fourth-page">
-		<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+	<div data-role="page" id="recipeDetails" class="recipeDetails">
+		<div data-role="header">
+			<h1>ConFood</h1>
+		</div>
+		<div data-role="main" class="ui-content">
+			<div style="text-align: center;">
+				<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
+		</div>
 	</div>
 	</body>
 </html>

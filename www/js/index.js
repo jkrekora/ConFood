@@ -34,7 +34,7 @@ function showAllRecipes(){
     }
     xmlhttp.open("GET","http://jkrekora.cba.pl/allrecipes.php",true);
     xmlhttp.onreadystatechange = function(){
-        if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE){
             document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
         }
     }
@@ -56,8 +56,8 @@ function getSelectedRecipes(){
     document.getElementById("recipe-list").innerHTML = " ";
     document.getElementById("optional-image").innerHTML = "";
     if (selectedProducts.length==0){
-        document.getElementById("recipe-list").innerHTML = "<p align='center'>Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz<p>";
-        document.getElementById("optional-image").innerHTML = "<div><img src='img/talerz_pusty.jpg'/ class='center'></div>";
+        document.getElementById("recipe-list").innerHTML = "<p>Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz w lodówce.<p>";
+        document.getElementById("optional-image").innerHTML = "<div><img src='img/talerz_pusty.jpg'></div>";
         return;
     } else{
         for(i = 0; i < selectedProducts.length; i++){
@@ -68,19 +68,19 @@ function getSelectedRecipes(){
             }
             xmlhttp.open("GET","http://jkrekora.cba.pl/selectedRecipes.php?ingredients="+selectedProducts[i],true);
             xmlhttp.onreadystatechange = function(){
-                if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                if (xmlhttp.readyState == XMLHttpRequest.DONE){
                     var recipesToArray = xmlhttp.responseText.split("_doc_splitter_");
                     console.log(recipesToArray.length);
                     for(i=0;i<recipesToArray.length-1;i++){
                       if(!document.getElementById("recipe-list").innerHTML.includes(recipesToArray[i])){
                           document.getElementById("recipe-list").innerHTML += recipesToArray[i];
-                          var detailsPageContent = "<a href=\"#recipeDetails\" class=\"ui-btn ui-btn-inline ui-corner-all ui-shadow\" onclick=showRecipeDetails()>Szczególy</a>"
+                          var detailsPageContent = "<a href=\"#recipeDetails\" class=\"ui-btn ui-btn-inline ui-corner-all ui-shadow\" onclick=showRecipeDetails()>Szczegóły</a>"
                           document.getElementById("recipe-list").innerHTML += detailsPageContent;
                       }
                     }
                     if(document.getElementById("recipe-list").innerHTML==" "){
-                        document.getElementById("recipe-list").innerHTML = "<p align='center'>Nie znależiono przepisów wykorzystujących twoje skladniki. Wybierz inne skladniki.<br/> Albo może czas udać sie do sklepu? :)</p>";
-                        document.getElementById("optional-image").innerHTML = "<div><img src='img/goshop.jpg'/ class='center'></div>";
+                        document.getElementById("recipe-list").innerHTML = "<p>Nie znaleziono przepisów wykorzystujących Twoje składniki. Wybierz inne składniki.<br/>Albo może czas udać sie do sklepu? :)</p>";
+                        document.getElementById("optional-image").innerHTML = "<div><img src='img/goshop.jpg'></div>";
                     }
                 }
             }
