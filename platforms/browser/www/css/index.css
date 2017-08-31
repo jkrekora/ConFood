@@ -3,7 +3,21 @@
     background-size: cover;
     text-align: center;
 }
-.recipe-list h3, .recipe-list {
+h3 {
+   color: #000000;
+   font-family: 'Merriweather', serif; font-size: 30px; font-weight: 300; line-height: 40px; margin: 0 30px 40px; text-align: center; text-shadow: #2a8d7b -1px -1px; }
+#response {
+  border-radius: 25px;
+  background: #ebebe0;
+  border-style: outset;
+  width: 90%;
+  background-color: #f2f2f2;
+
+}
+.bgimg {
+    background: url('../img/talerz_pusty.jpg') no-repeat center;
+}
+.recipe-list, div.recipe-list {
    margin-left: auto;
    margin-right: auto;
    text-align: auto;
@@ -26,4 +40,9 @@
 .rating > span:hover ~ span:before {
    content: "\2605";
    position: absolute;
+}
+.likes{
+    position: relative;
+    left: 80%;
+    bottom: 80%;
 }
