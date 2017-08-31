@@ -110,6 +110,7 @@ function getRecipeDetails(id){
                 document.getElementById("recipeDetails").innerHTML += "<div id='comments'></div>";
                 document.getElementById("recipeDetails").innerHTML += "<a href='#commentPage' class='ui-btn ui-btn-inline ui-corner-all ui-shadow'>Dodaj komentarz</a>";
                 document.getElementById("recipeDetails").innerHTML += "<button class='ui-btn ui-btn-inline ui-corner-all ui-shadow' id='showComments' onclick=getComments("+id+")>Pokaż komentarze</a>";
+                document.getElementById("recipeDetails").innerHTML += "<a href='#recipes-page' class='ui-btn ui-btn-inline ui-corner-all ui-shadow'>Cofnij</a>";
           }
       }
   xmlhttp.send();

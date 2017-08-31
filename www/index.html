@@ -245,7 +245,7 @@
 		</div>
 		<div data-role="main" class="ui-content">
 			<div style="text-align: center;">
-				<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+				<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
 			</div>
 		</div>
 		<div data-role="footer" data-position="fixed">
@@ -253,26 +253,34 @@
 		</div>
 	</div>
 	<div data-role="page" id="commentPage">
-	<div data-role="main" class="ui-content">
-	  <h2>Dodaj komentarz</h2>
-	  <div class="item">
-			<label for="author">Nazwa użytkownika<br>
-				<input type="text" id="author" value=""/></label>
-	  </div>
-	  <div class="item">
+		<div data-role="header">
+			<h1>ConFood</h1>
+		</div>
+		<div data-role="main" class="ui-content">
+			<h2>Dodaj komentarz</h2>
+			<div class="item">
+				<label for="author">Nazwa użytkownika<br>
+					<input type="text" id="author" value=""/></label>
+			</div>
+			<div class="item">
 				<label for="review_text">Komentarz<br>
 					<textarea rows="6" cols="50" id="review_text" value=""></textarea></label>
-	  </div>
-	  <div class="item">
+			</div>
+			<div class="item">
 				<label for="review_text">Ocena (0-5)<br>
 					<textarea rows="6" cols="50" id="review_points" value=""></textarea></label>
-	  </div>
-		<label>ID przepisu: <b id="comment_recipe_id"></b></label>
-	  <div class="item">
-				<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="comment()">Prześlij</button>
-	  </div>
-			<a href="#recipeDetails" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
-	</div>
+			</div>
+			<label>ID przepisu: <b id="comment_recipe_id"></b></label>
+			<div style="text-align: center;">
+				<div class="item">
+					<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="comment()">Prześlij</button>
+					<a href="#recipeDetails" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+				</div>
+			</div>
+		</div>
+		<div data-role="footer" data-position="fixed">
+			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
+		</div>
 	</div>
 	</body>
 </html>
