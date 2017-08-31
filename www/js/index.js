@@ -27,9 +27,10 @@ function sendMyRecipe(){
 function comment(){
     var author=$("#author").val();
     var review_text=$("#review_text").val();
+    var review_points=$("#review_points").val();
     var recipe_id=document.getElementById("comment_recipe_id").innerHTML;
     console.log(recipe_id);
-    var dataString="author="+author+"&review_text="+review_text+"&recipe_id="+recipe_id;
+    var dataString="author="+author+"&review_text="+review_text+"&review_points="+review_points+"&recipe_id="+recipe_id;
     if($.trim(author).length>0 & $.trim(review_text).length>0){
         $.ajax({
             type: "POST",
@@ -44,6 +45,7 @@ function comment(){
         });
         document.getElementById("author").value='';
         document.getElementById("review_text").value='';
+        document.getElementById("review_points").value='';
         $("#submit-recipe").val("Success");
     } else{
         $("#submit-recipe").val("Failed");
