@@ -22,7 +22,35 @@ function sendMyRecipe(){
     } else{
         $("#submit-recipe").val("Failed");
     }
+}
+
+function comment(){
+    var author=$("#author").val();
+    var review_text=$("#review_text").val();
+    var recipe_id=document.getElementById("comment_recipe_id").innerHTML;
+    console.log(recipe_id);
+    var dataString="author="+author+"&review_text="+review_text+"&recipe_id="+recipe_id;
+    if($.trim(author).length>0 & $.trim(review_text).length>0){
+        $.ajax({
+            type: "POST",
+            url:"http://jkrekora.cba.pl/insertReview.php",
+            data: dataString,
+            crossDomain: true,
+            cache: false,
+            beforeSend: function(dataString){ $("#submit-recipe").val("Connection...");},
+            success: function(data){
+                $("#submit-recipe").val("Success");
+            }
+        });
+        document.getElementById("author").value='';
+        document.getElementById("review_text").value='';
+        $("#submit-recipe").val("Success");
+    } else{
+        $("#submit-recipe").val("Failed");
+    }
 };
+var pictureSource;
+var destinationType;
 var selectedProducts = new Array();
 function showAllRecipes(){
     if (window.XMLHttpRequest){
@@ -49,8 +77,44 @@ function showProducts(){
         }
     }
 }
+function getComments(id){
+  document.getElementById("showComments").style.display = 'none';
+  if (window.XMLHttpRequest){
+      xmlhttp = new XMLHttpRequest();
+  } else{
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.open("GET","http://jkrekora.cba.pl/getReview.php?recipe_id="+id,true);
+  xmlhttp.onreadystatechange = function(){
+      if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("comments").innerHTML += xmlhttp.responseText.split("_doc_comment_splitter_");
+          }
+      }
+  xmlhttp.send();
+}
+function getRecipeDetails(id){
+  document.getElementById("recipeDetails").innerHTML="";
+  if (window.XMLHttpRequest){
+      xmlhttp = new XMLHttpRequest();
+  } else{
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.open("GET","http://jkrekora.cba.pl/getRecipeByID.php?id="+id,true);
+  xmlhttp.onreadystatechange = function(){
+      if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                document.getElementById("recipeDetails").innerHTML += xmlhttp.responseText.split("_doc_splitter_");
+                document.getElementById("comment_recipe_id").innerHTML = id;
+                document.getElementById("comment_recipe_id").setAttribute("value", id);
+                document.getElementById("recipeDetails").innerHTML += "<div id='comments'></div>";
+                document.getElementById("recipeDetails").innerHTML += "<a href='#commentPage' class='ui-btn ui-btn-inline ui-corner-all ui-shadow'>Dodaj komentarz</a>";
+                document.getElementById("recipeDetails").innerHTML += "<button class='ui-btn ui-btn-inline ui-corner-all ui-shadow' id='showComments' onclick=getComments("+id+")>Pokaż komentarze</a>";
+          }
+      }
+  xmlhttp.send();
+}
 function getSelectedRecipes(){
     var selectedRecipesStr="";
+    var parser = new DOMParser();
     document.getElementById("recipe-list").innerHTML = " ";
     document.getElementById("optional-image").innerHTML = "";
     if (selectedProducts.length==0){
@@ -70,9 +134,11 @@ function getSelectedRecipes(){
                     var recipesToArray = xmlhttp.responseText.split("_doc_splitter_");
                     console.log(recipesToArray.length);
                     for(i=0;i<recipesToArray.length-1;i++){
+                      var responseAsDOM = parser.parseFromString(recipesToArray[i], "text/html");
+                      var recipeId = responseAsDOM.getElementById("response").getAttribute("recipeid");
                       if(!document.getElementById("recipe-list").innerHTML.includes(recipesToArray[i])){
                           document.getElementById("recipe-list").innerHTML += recipesToArray[i];
-                          var detailsPageContent = "<a href=\"#recipeDetails\" class=\"ui-btn ui-btn-inline ui-corner-all ui-shadow\" onclick=showRecipeDetails()>Szczegóły</a>"
+                          var detailsPageContent = "<a href=\"#recipeDetails\" class=\"ui-btn ui-btn-inline ui-corner-all ui-shadow\" onclick=getRecipeDetails("+recipeId+")>Szczegóły</a>"
                           document.getElementById("recipe-list").innerHTML += detailsPageContent;
                       }
                     }

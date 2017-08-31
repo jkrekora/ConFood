@@ -252,5 +252,23 @@
 			<h1>&copy; Jakub Krekora & Serhiy Karaptan</h1>
 		</div>
 	</div>
+	<div data-role="page" id="commentPage">
+	<div data-role="main" class="ui-content">
+	  <h2>Dodaj komentarz</h2>
+	  <div class="item">
+			<label for="author">Nazwa użytkownika<br>
+				<input type="text" id="author" value=""/></label>
+	  </div>
+	  <div class="item">
+				<label for="review_text">Komentarz<br>
+					<textarea rows="6" cols="50" id="review_text" value=""></textarea></label>
+	  </div>
+		<label>ID przepisu: <b id="comment_recipe_id"></b></label>
+	  <div class="item">
+				<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="comment()">Prześlij</button>
+	  </div>
+			<a href="#recipeDetails" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+	</div>
+	</div>
 	</body>
 </html>
