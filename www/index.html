@@ -167,8 +167,9 @@
 			<div style="text-align: center;">
 				<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getSelectedRecipes()">Pokaż przepisy</a><br><br>
 				<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="capturePhoto()">Zrób zdjęcie</button><br><br>
-				<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto()">Dodaj zdjęcie</button><br><br>
-				<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY)">Wybierz zdjęcie</button><br><br>
+				<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">Wybierz zdjęcie</button><br><br>
+				<img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+				<button class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="uploadPhoto();">Dodaj zdjęcie</button><br><br>
 				<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
 			</div>
 		</div>
@@ -230,7 +231,7 @@
 			<div style="text-align: center;">
 				<div class="item">
 					<button id="submit-recipe" class="ui-btn ui-btn-inline ui-corner-all ui-shadow" onclick="sendMyRecipe()">Prześlij</button>
-					<a href="#otherPage1" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
+					<a href="#recipes-page" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Cofnij</a>
 				</div>
 			</div>
 		</div>

@@ -23,8 +23,6 @@ function sendMyRecipe(){
         $("#submit-recipe").val("Failed");
     }
 };
-var pictureSource;
-var destinationType;
 var selectedProducts = new Array();
 function showAllRecipes(){
     if (window.XMLHttpRequest){
@@ -88,187 +86,143 @@ function getSelectedRecipes(){
         }
     }
 }
+
 var pictureSource;   // picture source
-// var destinationType; // sets the format of returned value
+var destinationType; // sets the format of returned value
+
 // Wait for device API libraries to load
 //
 document.addEventListener("deviceready",onDeviceReady,false);
+
 // device APIs are available
 //
-function onDeviceReady(){
-    pictureSource = navigator.camera.PictureSourceType;
-    destinationType = navigator.camera.DestinationType;
+function onDeviceReady() {
+	pictureSource=navigator.camera.PictureSourceType;
+	destinationType=navigator.camera.DestinationType;
 }
+
 // Called when a photo is successfully retrieved
 //
-function onPhotoURISuccess(imageURI){
+function onPhotoDataSuccess(imageData) {
+  // Uncomment to view the base64-encoded image data
+  // console.log(imageData);
+
+  // Get image handle
+  //
+  var smallImage = document.getElementById('smallImage');
+
+  // Unhide image elements
+  //
+  smallImage.style.display = 'block';
+
+  // Show the captured photo
+  // The in-line CSS rules are used to resize the image
+  //
+  smallImage.src = "data:image/jpeg;base64," + imageData;
+}
+
+// Called when a photo is successfully retrieved
+//
+function onPhotoURISuccess(imageURI) {
+  // Uncomment to view the image file URI
+  // console.log(imageURI);
+
+  // Get image handle
+  //
+  var largeImage = document.getElementById('largeImage');
+
+  // Unhide image elements
+  //
+  largeImage.style.display = 'block';
+
+  // Show the captured photo
+  // The in-line CSS rules are used to resize the image
+  //
+  largeImage.src = imageURI;
+}
+
+// A button will call this function
+//
+function capturePhoto() {
+  // Take picture using device camera and retrieve image as base64-encoded string
+  navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+	destinationType: destinationType.DATA_URL });
+}
+
+// A button will call this function
+//
+function capturePhotoEdit() {
+  // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+  navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+	destinationType: destinationType.DATA_URL });
+}
+
+// A button will call this function
+//
+function getPhoto(source) {
+  // Retrieve image file location from specified source
+  navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+	destinationType: destinationType.FILE_URI,
+	sourceType: source });
+}
+
+// Called if something bad happens.
+//
+function onFail(message) {
+  alert('Failed because: ' + message);
+}
+
+function onPhotoURISuccess(imageURI) {
+
     // Show the selected image
     var smallImage = document.getElementById('smallImage');
     smallImage.style.display = 'block';
     smallImage.src = imageURI;
 }
+
 // A button will call this function
 //
-function onPhotoDataSuccess(imageURI){
-    var smallImage = document.getElementById('smallImage');
-    smallImage.style.display = 'block';
-    smallImage.src = imageURI;
-    movePic(imageURI);
-}
-function capturePhoto(){
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI,
-        saveToPhotoAlbum: true});
-}
-function getPhoto(source){
+function getPhoto(source) {
     // Retrieve image file location from specified source
-    navigator.camera.getPicture(onPhotoURISuccess, onFail,{ quality: 50,
+    navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
         destinationType: destinationType.FILE_URI,
         sourceType: source });
 }
-function uploadPhoto(){
+
+function uploadPhoto() {
+
     //selected photo URI is in the src attribute (we set this on getPhoto)
     var imageURI = document.getElementById('smallImage').getAttribute("src");
-    if (!imageURI){
+    if (!imageURI) {
         alert('Please select an image first.');
         return;
     }
+
     //set upload options
     var options = new FileUploadOptions();
     options.fileKey = "file";
     options.fileName = imageURI.substr(imageURI.lastIndexOf('/')+1);
     options.mimeType = "image/jpeg";
-    /*options.params ={
-     firstname: document.getElementById("firstname").value,
-     lastname: document.getElementById("lastname").value,
-     workplace: document.getElementById("workplace").value
-     }*/
+
     var ft = new FileTransfer();
-    ft.upload(imageURI, encodeURI("http://jkrekora.cba.pl/upload.php"), win, fail, options);
+    ft.upload(imageURI, encodeURI("http://jkrekora.cba.pl/uploadImage.php"), win, fail, options);
 }
+
 // Called if something bad happens.
 //
-function onFail(message){
+function onFail(message) {
     console.log('Failed because: ' + message);
 }
-function win(r){
+
+function win(r) {
     console.log("Code = " + r.responseCode);
     console.log("Response = " + r.response);
     //alert("Response =" + r.response);
     console.log("Sent = " + r.bytesSent);
 }
-function fail(error){
+
+function fail(error) {
     alert("An error has occurred: Code = " + error.code);
     console.log("upload error source " + error.source);
     console.log("upload error target " + error.target);
 }
-/* function getSelectedRecipes(){
-    if (selectedProducts.length == 0){
-        document.getElementById("recipe-list").innerHTML = "Powietrzem się nie najesz! Cofnij i wybierz produkty, które masz";
-        document.getElementById("optional-image").innerHTML = "<div style='width:800px; margin:0 auto;'><img align='middle' style='max-width: 50%; height: auto; width: auto;' src='img/talerz_pusty.jpg'/></div>";
-        return;
-    } else{
-        var allRecipes = document.getElementsByClassName("recipe");
-        var recipesToShow = [];
-        for (i = 0; i < allRecipes.length; i++){
-            for (j = 0; j < selectedProducts.length; j++){
-                if (allRecipes[i].getAttribute("ingredients").includes(selectedProducts[j])){
-                    recipesToShow.push(allRecipes[i]);
-                }
-            }
-        }
-        for (k = 0; k < recipesToShow.length; k++){
-            if (!document.getElementById("recipe-list").innerHTML.includes(recipesToShow[k].innerHTML)){
-                document.getElementById("recipe-list").innerHTML += recipesToShow[k].innerHTML;
-            }
-        }
-    }
-}
-function showMeal(){
-    if (window.XMLHttpRequest){
-        xmlhttp = new XMLHttpRequest();
-    } else{
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function(){
-        if (this.readyState == 4 && this.status == 200){
-            document.getElementById("txtHint").innerHTML = this.responseText;
-        }
-        xmlhttp.open("GET","http://jkrekora.cba.pl/json.php",true);
-        xmlhttp.send();
-    }
-}
-var pictureSource;
-var destinationType;
-var selectedProducts=null;
-document.addEventListener("deviceready",onDeviceReady,false);
-function onDeviceReady(){
-    pictureSource=navigator.camera.PictureSourceType;
-    destinationType=navigator.camera.DestinationType;
-}
-function onPhotoDataSuccess(imageURI){
-    var smallImage = document.getElementById('smallImage');
-    smallImage.style.display = 'block';
-    smallImage.src = imageURI;
-    movePic(imageURI);
-}
-function capturePhoto(){
-    navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
-        destinationType: destinationType.FILE_URI,
-        saveToPhotoAlbum: true});
-}
-function onFail(message){
-    alert('Failed because: ' + message);
-}
-function movePic(file){
-    window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError);
-}
-function resolveOnSuccess(entry){
-    var d = new Date();
-    var n = d.getTime();
-    var newFileName = n + ".jpg";
-    var myFolderApp = "ConFood";
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys){
-            var direct = fileSys.root;
-            direct.getDirectory( myFolderApp,
-            {create:true, exclusive: false},
-                function(myFolderApp)
-                {entry.moveTo(myFolderApp, newFileName,  successMove,  resOnError);
-                },
-                resOnError);
-    },
-        resOnError);
-}
-function successMove(entry){
-    sessionStorage.setItem('imagepath', entry.fullPath);
-}
-function resOnError(error){
-    alert(error.code);
-}
-function getImage(){
-    navigator.camera.getPicture(uploadPhoto, function(message){
-        alert('get picture failed');
-    },{
-        quality: 100,
-        destinationType: navigator.camera.DestinationType.FILE_URI,
-        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
-    });
-}
-function uploadPhoto(imageURI){
-    var options = new FileUploadOptions();
-    options.fileKey = "file";
-    options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
-    options.mimeType = "image/jpeg";
-    console.log(options.fileName);
-    var params = new Object();
-    params.value1 = "test";
-    params.value2 = "param";
-    options.params = params;
-    options.chunkedMode = false;
-    var ft = new FileTransfer();
-    ft.upload(imageURI, "http://jkrekora.cba.pl/upload.php", function(result){
-        console.log(JSON.stringify(result));
-    }, function(error){
-        console.log(JSON.stringify(error));
-    }, options);
-} */
